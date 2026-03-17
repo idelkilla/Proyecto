@@ -1,0 +1,45 @@
+/* CONTENEDOR PRINCIPAL */
+.anota-container {
+    width: 100%;
+    background: white; /* Fondo blanco */
+    padding: 40px 23px 30px 23px;  /* controla separación arriba y abajo */
+    color: #191e3b;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 80px;
+}
+
+.anota-bg {
+  display: none; /* o quítalo */
+}
+
+/* Texto NORMAL, sin top */
+.anota-text {
+    max-width: 900px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    line-height: 1.45;
+    letter-spacing: -0.08px;
+}
+
+.space {
+  margin-bottom: 16px;
+}
+
+/* TEXTO PRINCIPAL */
+.main-line {
+  margin-bottom: 16px;
+  font-size: 16px;
+}
+
+/* ESTILOS DE LETRA */
+.bold {
+  font-weight: 700;
+}
+
+.normal {
+  font-weight: 400;
+}
+

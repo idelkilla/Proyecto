@@ -1,0 +1,33 @@
+:root {
+    --color-primary: #191e3b;
+    --color-white: #ffffff;
+    --color-border: #9ad0c2;
+    --font-inter: 'Inter', sans-serif;
+    --header-height: 70px; 
+
+    --color-blue-dark: #265073; 
+    --color-gray-line: #7E7E7E; 
+    --color-blue-light: #94B6CC; 
+    --color-yellow: #FDDB32; 
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-inter);
+}
+
+h1 {
+    font-weight: 600;
+    color: var(--color-primary);
+    font-size: 32px;
+    letter-spacing: -0.64px;
+    margin: 0;
+}
+
+.home-page {
+    overflow-y: auto;
+    overflow-x: none;
+    height: 100vh;
+}
+

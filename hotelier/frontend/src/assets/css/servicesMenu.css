@@ -1,0 +1,46 @@
+
+.services-menu {
+  position: absolute;
+  top: 64px;
+  left: 200px;
+  width: 280px;
+  background: white;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+}
+
+.services-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.services-menu li {
+  padding: 10px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #191e3b;
+  cursor: pointer;
+}
+
+.services-menu li:hover {
+  background: #f3f5f9;
+  border-radius: 8px;
+}
+
+.services-menu li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.services-menu svg {
+  width: 18px;
+  height: 18px;
+  stroke: #2b3675;
+  fill: none;
+  stroke-width: 2;
+}

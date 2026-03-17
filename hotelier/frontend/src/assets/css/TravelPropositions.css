@@ -1,0 +1,174 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0');
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+.page-wrapper {
+  min-height: 65vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #191e3b;
+  transition: background-color 0.3s ease;
+  padding: 2rem;
+}
+
+.container {
+  max-width: 1152px;
+  width: 100%;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.pricing-card {
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(255, 255, 255);
+  border-radius: 20px;
+  overflow: hidden;
+  transition: transform 0.2s ease, background-color 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card-content {
+  padding: 2.5rem 2.5rem 1.5rem 2.5rem;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.header-section {
+  text-align: left;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.plan-title {
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  color: #000000;
+}
+
+.plan-description {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: #000000;
+}
+
+.price-section {
+  margin-top: 1.5rem;
+}
+
+.pricing-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centra todo el contenido */
+  text-align: center;
+  background-color: #ffffff;
+  border-radius: 15px;
+  padding: 0rem 1.5rem;
+  height: 300px;;
+  box-shadow: 2px 4px 9px rgba(0, 0, 0, 0.9);
+}
+
+.icon-wrapper {
+  position: relative;
+  margin-bottom: 0.5rem;
+  display: inline-flex;
+}
+
+.main-icon {
+  font-size: 4rem !important;
+  color: #191e3b; 
+}
+
+.badge-coin {
+  position: absolute;
+  bottom: 0;
+  right: -5px;
+  background-color: #facc15; /* Amarillo moneda */
+  border-radius: 50%;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-card);
+}
+
+.badge-coin span {
+  font-size: 1.2rem !important;
+  font-weight: bold;
+  color: #191e3b;
+}
+
+.plan-title {
+  font-family: "Playfair Display", serif;
+  font-size: 1.75rem;
+  color: #191e3b;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.plan-description {
+  font-size: 1rem;
+  color: #475569;
+  line-height: 1.4;
+  margin-bottom: 0.5rem;
+}
+
+.action-button {
+  padding: 0.6rem 2rem;
+  border: 1px solid #191e3b;
+  border-radius: 9999px;
+  color: #191e3b;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.action-button:hover {
+  background-color: #191e3b;
+  color: white;
+}
+
+
+.section-header {
+  text-align: left;
+  margin-bottom: 3rem; 
+}
+
+.main-title {
+  font-family: 'Inter', sans-serif; 
+  font-size: 28px;
+  font-weight: 600;
+  color: white; 
+  letter-spacing: -0.02em;
+  margin-bottom: 0.4rem;
+}
+
+.subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  color: white; 
+  font-weight: 450;
+}
+
+:root.dark .main-title {
+  color: #ffffff;
+}
