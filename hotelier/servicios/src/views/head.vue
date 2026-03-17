@@ -8,7 +8,7 @@
 </template>
 
 <script setup>
-import Header from "../components/layout/Header.vue";
+import Header from "/Users/User/proyecto/hotelier/frontend/src/components/Header.vue";
 import Cuerpo from "../components/layout/Cuerpo.vue";
 
 </script>
