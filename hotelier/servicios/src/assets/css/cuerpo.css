@@ -1,0 +1,1130 @@
+/* --- ESTILOS GENERALES Y LAYOUT PRINCIPAL --- */
+:root {
+    --main-color: #113955;
+}
+
+.main-container {
+    margin-top: 15px;
+    flex-direction: column;
+    align-items: center;
+    background-color: #ffff; 
+    overflow: hidden;
+    padding: 0;
+}
+/* CAMBIO DEFINITIVO DE TAMAÑO DE ICONOS */
+.input-group svg.icon, 
+.input-group .icon {
+    width: 28px !important;  /* Prueba con 28px para que se note el cambio */
+    height: 28px !important;
+    min-width: 28px !important; /* Evita que se encojan */
+    margin-right: 12px !important;
+    display: block !important;
+}
+
+/* Ajusta el grosor de la línea si se ve muy tosco al agrandar */
+.input-group svg.icon path {
+    stroke-width: 1.5; 
+}
+.search-section-container {
+    width: 100%; 
+    max-width: 1250px; 
+    margin-top: 70px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.search-bar-content {
+    display: flex;
+    flex-direction: column;
+    background-color: transparent;
+    padding: 0; 
+    box-shadow: none; 
+}
+
+.search-box-icon {
+    /* Ajusta estos dos valores a tu gusto */
+    width: 20px; 
+    height: 20px;
+    
+    color: #1a4f78;
+    margin-right: 12px;
+    flex-shrink: 0; /* Esto evita que el icono se aplaste si el texto es largo */
+}
+
+/* 1. CAMPOS DE BÚSQUEDA HORIZONTAL (LA CAJA CON BORDE) */
+.search-inputs-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #dddddd; 
+    border-radius: 8px; 
+    overflow: hidden; 
+    margin-bottom: 0;
+    padding: 0;
+}
+
+/* 2. ESTILOS DEL MENÚ DESPLEGABLE */
+.dropdown-container {
+    position: relative;
+    flex-grow: 1; 
+}
+
+.dropdown-container:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 15%;
+    height: 70%;
+    width: 1px;
+    background-color: #dddddd;
+      overflow: hidden;
+    z-index: 10;
+}
+
+.price-section {
+  margin-top: 25px;
+  margin-left: 30px; /* Para que alinee con tus otros títulos */
+}
+
+.price-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 12px;
+}
+
+.price-inputs-container {
+  display: flex;
+  gap: 10px; /* Espacio entre los dos cuadros */
+}
+
+.price-card {
+  flex: 1;
+  border: 1px solid #7a86a1; /* El color de borde de tu foto */
+  border-radius: 10px;
+  padding: 8px 12px;
+  background: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.price-card .label {
+  font-size: 12px;
+  color: #333;
+  margin-bottom: 2px;
+}
+
+.input-row {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  color: #113955;
+}
+
+.input-row input {
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 16px;
+  font-weight: bold;
+  color: #113955;
+  background: transparent;
+  padding-left: 2px;
+}
+
+/* Para quitar las flechas del input */
+.input-row input::-webkit-inner-spin-button,
+.input-row input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.dropdown-menu {
+    position: absolute;
+    top: 100%; 
+    left: 0;
+    width: 120px; 
+    max-height: 25px;
+    overflow-y: auto;
+    background-color: rgb(252, 250, 250);
+    border: 1px solid #ddd;
+    border-top: none; 
+    border-radius: 0 0 8px 8px; 
+    box-shadow: 0 8px 16px rgba(212, 20, 20, 0.1);
+    z-index: 1000; 
+    padding: 10px 0;
+}
+
+.dropdown-placeholder {
+    padding: 10px 15px;
+    color: #999;
+    font-size: 14px;
+    text-align: left;
+}
+
+/* ESTILOS DE LOS INPUTS INDIVIDUALES */
+.input-group {
+    flex-grow: 1; 
+    display: flex;
+    align-items: center;
+    padding: 10px 15px; 
+    border-radius: 0; 
+    cursor: pointer;
+    position: relative;
+    transition: background-color 0.1s;
+}
+
+.input-group:hover {
+    background-color: #f8f8f8;
+}
+
+.date-input::after, .guests-input::after {
+    content: ''; 
+    position: absolute;
+    right: 0;
+    top: 15%;
+    height: 70%;
+    width: 1px;
+    background-color: #eee;
+}
+
+.input-group .icon {
+    width: 20px;
+    height: 20px;
+    color: #333;
+    margin-right: 10px;
+}
+
+.input-text-area {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+    width: 100%; 
+}
+
+.input-text-area label {
+    font-size: 12px;
+    color: #888;
+    font-weight: 500;
+}
+
+.input-text-area input {
+    border: none;
+    outline: none;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    width: 100%;
+    background: none;
+}
+
+.input-text-area input::placeholder {
+    color: #333; 
+    font-weight: bold;
+}
+
+/* BOTÓN DE BÚSQUEDA */
+.search-button {
+    background-color: #1a4f78; 
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-left: 0; 
+    border-radius: 0 8px 8px 0; 
+    height: 60px; 
+    flex-shrink: 0; 
+}
+
+.search-button:hover {
+    background-color: #113955;
+}
+
+/* --- TABS DE ALOJAMIENTO --- */
+.accommodation-tabs {
+    background-color: #e9f1f6;
+    border-radius: 500px;
+    display: flex;
+    position: relative;
+    padding: 5px;
+    margin: 20px auto; /* El 'auto' la mantiene centrada */
+    
+    /* CAMBIA ESTO: Súbelo de 630px a 850px para que sea más larga */
+    width: 1000px; 
+}
+
+.tab {
+    flex: 1;
+    border: none;
+    background: none;
+    padding: 12px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    color: #113955;
+    display: flex;
+    z-index: 1;
+
+    outline: none;
+    /* --- DONDE MOVER LAS COSAS --- */
+    align-items: center;     /* 'center' para centrar verticalmente */
+    justify-content: center; /* Cambia a 'flex-start' si quieres todo a la izquierda */
+    gap: 12px;               /* Aumenta este número para separar más el icono del texto */
+}
+/* 1. Limpiamos el tab activo para que no tenga fondo propio */
+.tab.active {
+    /* El color de fondo azul claro de la pestaña seleccionada */
+    background-color: #cbd9e6; 
+    color: #113955; 
+    font-weight: 700;
+    
+    /* El borde que quieres que se vea en el centro */
+   
+    
+    /* Redondeado para que parezca una cápsula */
+    border-radius: 40px; 
+    
+    /* Sombra suave para dar profundidad */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    
+    /* Esto asegura que el botón no cambie de tamaño al ponerle el borde */
+    box-sizing: border-box;
+}
+
+
+.tab:focus {
+    outline: none;
+}
+
+.tab:active {
+    outline: none;
+}
+
+
+/* --- LAYOUT DE CONTENIDO (DOS COLUMNAS) --- */
+.main-content-layout {
+    /* Ajustado para alinearse con la barra de búsqueda superior */
+    width: 90%; 
+    max-width: 1250px;
+    display: grid;
+    grid-template-columns: 250px 1fr; 
+    gap: 30px;
+    margin-bottom: 50px;
+}
+/* COLUMNA DE FILTROS */
+.filters-column p {
+    font-size: 16px; /* Tamaño reducido */
+    font-weight: bold;
+    margin-left:30px ;
+    margin-bottom: 12px; /* Espacio con las opciones */
+    color:      #113955;
+}
+
+.filter-option {
+    
+    margin-left:40px ;
+    display: flex;
+    align-items: center; /* Alineación perfecta texto/circulo */
+    margin-bottom: 8px; /* Más compacto verticalmente */
+    font-size: 13px; /* Texto de opciones más pequeño */
+    color: #333;
+}
+
+.filter-option input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 16px; /* Círculo más pequeño */
+    height: 16px; /* Círculo más pequeño */
+    border: 1px solid #333; /* Borde más fino */
+    border-radius: 50px; /* Cambiado a cuadrado levemente redondeado como la foto */
+    margin-right: 10px;
+    display: grid;
+    place-content: center;
+    cursor: pointer;
+    background-color: #fff;
+}
+
+.filter-option input[type="checkbox"]:checked {
+    border: 2px solid #113955; 
+    background-color: #113955;
+}
+
+/* Baja la columna de filtros respecto al buscador */
+.filters-column {
+    padding-top: 25px; /* Esto empuja el "Filtrar por" hacia abajo */
+}
+
+
+/* --- TARJETA DEL HOTEL --- */
+.hotel-card {
+    display: flex;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-start;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); 
+    
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Para que sea interactivo */
+}
+.hotel-card:hover {
+    transform: translateY(-5px); /* Sube un poquito */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); /* La sombra se vuelve más profunda */
+}
+
+
+
+.card-details {
+    flex-grow: 1;
+    /* Quitamos el padding de la izquierda para que todo empiece desde el borde de la foto */
+    padding: 15px 15px 15px 0px !important; 
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Alinea todo al inicio (izquierda) */
+}
+.price-group {
+    /* Mueve el precio hacia abajo 30px sin afectar a la imagen ni al título */
+    transform: translateY(30px) !important; 
+    text-align: right;
+}
+
+.card-pricing {
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-start; /* Alineamos arriba */
+    padding: 15px;
+    /* Bajamos todo el bloque de precio 40px desde su posición actual */
+    padding-top: 100px !important; 
+    flex-shrink: 0;
+    text-align: right;
+}
+.total-price{
+    color: black;
+    font-weight: 500;
+    font-size:20px ;
+}
+.price-per-night{
+    color: black;
+    font-weight: 500;
+    font-size:20px ;
+}
+
+.card-details {
+    flex-grow: 1;
+    padding: 15px 15px 15px 10px !important;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Contenedor del Rating */
+.rating-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #000000; /* Verde de la descripción */
+    /* CONTROL DE ALTURA: Ajusta este número para bajarlo más o menos */
+    margin-top: 85px !important; 
+    font-size: 15px;
+    font-weight: 500;
+}
+
+/* La cajita roja del número (9.0) */
+.rating {
+    background-color: #e31c1c; /* Rojo intenso de tu imagen */
+    color: white !important;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 14px;
+    display: inline-block;
+}
+.card-details h3 {
+    color: #1a4f78; 
+    font-size: 20px;
+    margin-bottom: 2px;
+    margin-left: 0 !important; /* Reseteamos el error anterior */
+}
+.card-details {
+    flex-grow: 1;
+    /* Los valores son: Top, Right, Bottom, Left */
+    padding: 15px 15px 15px 10px !important; 
+}
+
+.subtitle {
+    color: #666; /* Un grisito se ve mejor para ubicaciones */
+    font-size: 14px;
+    margin-left: 0 !important; /* Reseteamos el -1500px */
+    margin-top: 0;
+}
+
+.amenities span {
+    display: inline-flex;  /* Cambia inline-block por inline-flex */
+    align-items: center;   /* Centra el icono verticalmente con el texto */
+    gap: 2px;              /* Controla el espacio exacto entre texto e icono */
+    
+    padding: 4px 10px;
+    border-radius: 15px;
+    font-size: 12px;
+    color: #113955;
+    margin-right: 5px;
+}
+/* Contenedor del texto al lado del número */
+.rating-text-stack {
+    display: flex;
+    flex-direction: column; /* Esto pone uno arriba del otro */
+    line-height: 1.2;       /* Pegaditos como en la foto */
+    justify-content: center;
+}
+
+.rating-status {
+    font-weight: bold;
+    color: #333; /* O el verde que prefieras */
+    font-size: 14px;
+}
+
+.reviews {
+    font-size: 12px;
+    color: #666; /* Gris para que resalte menos que el 'Muy Bueno' */
+}
+
+.rating-info {
+    display: flex;
+    align-items: center; /* Alinea el número rojo con el bloque de texto */
+    gap: 8px;
+    margin-top: 85px !important; /* El control que ya teníamos para bajarlo */
+}
+/* Esto apunta al SVG que está dentro del span de amenidades */
+.amenity-tag svg {
+    margin-left: -2px !important; /* Ajusta este número (ej. -4px) hasta que te guste */
+    vertical-align: middle;       /* Asegura que esté centrado con el texto */
+    display: inline-block;
+}
+.card-image-placeholder {
+    width: 350px;  /* Bajamos de 500px a 350px para que no sea tan gigante */
+    height: 300px; /* Altura fija para que todas las tarjetas midan lo mismo */
+    background-color: #eee;
+    flex-shrink: 0;
+    overflow: hidden;
+    position: relative; /* Necesario para que las flechas floten adentro */
+}
+.hotel-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;    /* Llena el cuadro sin deformarse */
+    object-position: center; /* Centra la foto para que no se corte la cara de nadie */
+    display: block;
+}
+
+
+.card-pricing {
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-start; 
+    padding: 15px;
+    flex-shrink: 0;
+    text-align: right;
+}
+
+.price-per-night {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    margin-top: 15px; 
+}
+
+.taxes-info {
+    font-size: 12px;
+    color: #008009; 
+    font-weight: 500;
+}
+
+/* ESTILOS DEL SLIDER */
+.slider-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.slider-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.5);
+    color: #113955;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 2;
+    border-radius: 50px;
+     outline: none !important;      /* Quita el borde al hacer clic */
+    border: none !important;       /* Asegura que no tenga borde normal */
+    -webkit-tap-highlight-color: transparent;
+}
+
+.left { left: 10px; }
+.right { right: 10px; }
+
+.slider-dots {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+
+.slider-dots span {
+    width: 8px;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+}
+
+.slider-dots span.active {
+    background: white;
+}
+
+/* BOTÓN DE FAVORITO (CORAZÓN) *//* EL CÍRCULO (LA JAULA) */
+.wishlist-button {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12) !important;
+    position: absolute !important;
+    top: 15px !important;
+    right: 15px !important;
+    /* Agrandamos el círculo a 50px para que quepa un corazón grande */
+    width: 50px !important; 
+    height: 50px !important;
+    background: white !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border: none !important;
+    z-index: 20 !important;
+    padding: 0 !important; /* IMPORTANTE: Quitamos el relleno para que no apriete al corazón */
+    outline: none !important;      /* Quita el borde al hacer clic */
+    border: none !important;       /* Asegura que no tenga borde normal */
+    -webkit-tap-highlight-color: transparent;
+}
+/* Cuando el corazón está activo (Favorito) */
+.wishlist-button.is-active .heart-svg-fix {
+    fill: #ff385c !important;   /* Relleno rojo */
+    stroke: #ff385c !important; /* Borde rojo */
+}
+
+/* Efecto de latido pequeño al hacer clic */
+.wishlist-button:active {
+    transform: scale(0.9);
+}
+
+/* EL CORAZÓN (EL PRESO) */
+.heart-svg-fix {
+    /* Ahora que el círculo mide 50px, podemos subir el corazón a 30px o 32px */
+    width: 32px !important; 
+    height: 32px !important;
+    stroke: #ff385c !important; 
+    stroke-width: 2px !important;
+    fill: none; /* Si quieres que se vea vacío por dentro */
+    display: block !important;
+}
+.wishlist-button:hover {
+    transform: scale(1.1); /* Efecto de agrandar un poquito al pasar el mouse */
+}
+.wishlist-button svg {
+    width: 28px !important;  /* Prueba con 28px para ver si nota el cambio */
+    height: 28px !important;
+    display: block;
+}
+
+/* Si quieres que el icono se pinte al hacer clic (opcional) */
+.wishlist-button svg:active {
+    fill: #e31c5f;
+}
+/* --- SECCIÓN DE PRECIO (Contenedor General) --- */
+.price-section {
+    margin-top: 25px;   /* Separa la sección de precio de los checkboxes de arriba */
+    margin-left: 30px;  /* Alinea el bloque con el texto de "Filtrar por" */
+}
+
+/* El título que dice "Precio" */
+.price-title {
+    font-size: 16px;    /* Tamaño de la letra del título */
+    font-weight: bold;  /* Pone el texto en negrita */
+    color: #333;        /* Color gris oscuro casi negro */
+    margin-bottom: 12px;/* Espacio entre el título y los cuadros de entrada */
+}
+
+/* Contenedor que guarda los dos cuadros (Mínimo y Máximo) */
+.price-inputs-container {
+    display: flex;      /* Pone los dos cuadros uno al lado del otro (horizontal) */
+    gap: 8px;          /* El espacio de separación entre el cuadro Mín y el cuadro Máx */
+}
+
+/* El diseño de cada "tarjetita" blanca de entrada */
+.price-card {
+   width: 85px; /* Tamaño más pequeño y fijo para las cards */
+    border: 1px solid #7a86a1; 
+    border-radius: 10px;
+    padding: 6px 10px;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    text-align: center;
+}
+
+.price-label {
+    font-size: 10px;
+    color: #888;
+    line-height: 1;
+    margin-bottom: 2px;
+    /* Asegura que el texto de la etiqueta también esté centrado */
+    text-align: center; 
+}
+/* --- LA TARJETA (Ajuste de altura total) --- */
+.price-card {
+    width: 85px;
+    border: 1px solid #7a86a1;
+    border-radius: 8px;
+    /* Reducimos el padding inferior para que el contenido no se vea "caído" */
+    padding: 2px 8px 4px 8px; 
+    background: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Evita que la caja crezca de más */
+    height: 45px; 
+}
+
+/* --- LA ETIQUETA --- */
+.price-label {
+    font-size: 10px;
+    color: #888;
+    text-align: center;
+    
+    /* 1. AGREGA ESTO PARA BAJARLA: */
+    margin-top: 4px;    /* Aumenta este número para bajar la etiqueta más */
+    
+    /* 2. AJUSTA ESTO PARA SEPARARLA DEL NÚMERO: */
+    margin-bottom: 2px; /* Espacio entre la etiqueta y el número de abajo */
+    
+    line-height: 1;
+}
+/* --- CONTENEDOR DEL INPUT --- */
+.price-input-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    /* Subimos el contenedor entero usando un margen superior negativo */
+    margin-top: -2px; 
+}
+
+/* --- EL INPUT (Donde escribes) --- */
+.price-input-wrapper input {
+    border: none;
+    outline: none;
+    width: 100%;
+    /* Reducimos la altura de la línea para que el texto suba */
+    height: 33px; 
+    line-height: 1; 
+    font-size: 15px;
+    font-weight: bold;
+    color: #113955;
+    background: transparent;
+    text-align: center;
+    
+    /* Quitamos cualquier margen interno que el navegador ponga por defecto */
+    padding: 0; 
+    margin: 0; 
+}
+
+
+
+/*PARTE DE LOS OTROS
+/* Contenedor principal de la sección */
+.accommodation-section {
+    width: 100%;
+    margin-top: 25px;
+    padding-left: 0; /* Asegura que no tenga sangría a la izquierda */
+}
+
+/* Título de la sección */
+.filter-title-bold {
+    font-size: 16px;
+    font-weight: bold;
+    color: #113955;
+    margin-bottom: 15px;
+  margin-left: 60;
+       align-items: 20px; 
+}
+
+/* Lista de opciones */
+.accommodation-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px; /* Espacio vertical entre filas */
+}
+
+/* La Fila: Clave para el alineamiento */
+.accommodation-row {
+    display: flex;
+    justify-content: space-between; /* Empuja el número al extremo derecho */
+    align-items: center;            /* Centra verticalmente checkbox y texto */
+    width: 100%;
+}
+
+/* Grupo de Checkbox + Label */
+/* --- ESTILO SOLO PARA EL BOTÓN (EL CIRCULITO) --- */
+
+/* 1. Estilo del círculo cuando está vacío */
+.checkbox-group input[type="checkbox"] {
+    appearance: none;           /* Borra el cuadro original del navegador */
+    -webkit-appearance: none;   /* Para que funcione en Safari/Chrome */
+    width: 18px;                /* Tamaño del círculo */
+    height: 18px;
+    border: 2px solid #7a86a1;   /* Color del borde gris azulado */
+    border-radius: 50%;         /* Lo hace un círculo perfecto */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;    /* Fondo blanco inicial */
+}
+
+/* 2. Color cuando el usuario lo PRESIONA (se marca) */
+/* Esto hace que los círculos de abajo sean iguales a los de arriba */
+
+.checkbox-group input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 16px;              /* El tamaño que usaste arriba */
+    height: 16px;
+    border: 1px solid #333;   /* Borde fino oscuro */
+    border-radius: 50%;       /* Círculo perfecto */
+    margin-right: 10px;
+    display: grid;
+    place-content: center;
+    cursor: pointer;
+    background-color: #fff;
+    transition: all 0.2s;
+}
+
+/* El estado presionado (Llenado azul con punto blanco) */
+.checkbox-group input[type="checkbox"]:checked {
+    border: 2px solid #113955; 
+    background-color: #113955;
+}
+
+/* El puntito blanco central */
+
+
+/* Para que el texto y el círculo estén alineados y con el color correcto */
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.checkbox-group label {
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+}
+/* El número gris de la derecha */
+.count-text {
+    font-size: 14px;
+    color: #888;
+}/* ============================================================
+   SECCIÓN DE SERVICIOS (CENTRADO PERFECTO)
+   ============================================================ */
+
+.services-section {
+    margin-top: 30px;
+    width: 100%;             /* Ocupa todo el ancho disponible */
+    padding: 0 15px;         /* Un pequeño respiro a los lados */
+    box-sizing: border-box;
+}
+
+.services-section .filter-title-bold {
+    margin-left: 15px;       /* Alinea el título con el borde de los cuadros */
+    margin-bottom: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #113955;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 12px;
+    /* CENTRADO MÁGICO */
+   margin-left: -20px !important; /* Prueba con -10px, -20px, etc., hasta que lo veas bien */         /* Centra el bloque entero */
+    max-width: 270px;        /* Ajusta este número al ancho de tu columna */
+}
+
+.service-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    /* Cuadros uniformes */
+    aspect-ratio: 1 / 1; 
+    min-height: 100px;
+    
+    background-color: #ffffff;
+    border: 1.5px solid #d1d5db;
+    border-radius: 15px;
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.service-card:hover {
+    border-color: #113955;
+    background-color: #f9fafb;
+}
+
+.service-icon {
+    width: 26px;
+    height: 26px;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.service-name {
+    font-size: 11px;
+    font-weight: 600;
+    color: #111;
+    text-align: center;
+    line-height: 1.2;
+}
+.stars-section {
+    margin-top: 25px;
+    padding-left: 30px; /* Alineado con el resto */
+}
+
+.star-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding-right: 15px;
+}
+
+.star-icons {
+    display: inline-flex;
+    gap: 2px;
+    vertical-align: middle;
+}
+
+/* Reutilizando tu estilo de checkbox circular */
+.star-row input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 1px solid #333;
+    border-radius: 50%; /* Círculo como los de arriba */
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.star-row input[type="checkbox"]:checked {
+    background-color: #113955;
+    border-color: #113955;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+}
+
+.count-text {
+    font-size: 13px;
+    color: #888;
+}
+
+.filters-column {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    font-family: sans-serif;
+  }
+
+  .filter-option {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* Espacio entre el cuadro y el texto */
+  }
+
+  /* --- TU ESTILO ORIGINAL --- */
+  /* From Uiverse.io by Nawsome */ 
+.clear {
+  clear: both;
+}
+
+.checkBox {
+  display: block;
+  cursor: pointer;
+  width: 9px;
+  height: 10px;
+  border: 3px solid rgba(255, 255, 255, 0);
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0px 0px 0px 2px #113955;
+}
+
+.checkBox div {
+  width: 40px;
+  height: 60px;
+  background-color: #113955;
+  top: -52px;
+  left: -52px;
+  position: absolute;
+  transform: rotateZ(45deg);
+  z-index: 100;
+}
+
+.checkBox input[type=checkbox]:checked + div {
+  left: -10px;
+  top: -10px;
+}
+
+.checkBox input[type=checkbox] {
+  position: absolute;
+  left: 50px;
+  visibility: hidden;
+}
+
+.transition {
+  transition: 300ms ease;
+}
+
+
+.filter-title-bold {
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.accommodation-row {
+    display: flex;
+    justify-content: space-between; /* Texto a la izquierda, número a la derecha */
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.label-text {
+    cursor: pointer;
+}
+
+
+/* --- TUS BOTONES ANIMADOS (CORREGIDOS) --- */
+.checkBox {
+    display: block;
+    cursor: pointer;
+    width: 9px; /* Un poco más pequeños para listas */
+    height: 10px;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0px 0px 0px 2px #113955;
+    flex-shrink: 0;
+}
+
+.checkBox .transition {
+    width: 50px;
+    height: 50px;
+    background-color: #113955;
+    top: -42px;
+    left: -42px;
+    position: absolute;
+    transform: rotateZ(45deg);
+    z-index: 10;
+    transition: 300ms ease;
+}
+
+/* Selector clave para la animación: Input marcado + div de transición */
+.checkBox input[type=checkbox]:checked + .transition {
+    left: -5px;
+    top: -5px;
+}
+
+.checkBox input[type=checkbox] {
+    position: absolute;
+    visibility: hidden;
+}
+.stars-section {
+    padding: 20px;
+   
+    color: white;
+}
+
+.star-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.star-icons {
+    display: flex;
+    gap: 2px;
+    cursor: pointer;
+}
+
+/* --- TU BOTÓN ANIMADO --- */
+.checkBox {
+    display: block;
+    cursor: pointer;
+    width: 9px;
+    height: 10px;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0px 0px 0px 2px #113955;
+    flex-shrink: 0;
+}
+
+.checkBox .transition {
+    width: 50px;
+    height: 50px;
+    background-color: #113955;
+    top: -42px;
+    left: -42px;
+    position: absolute;
+    transform: rotateZ(45deg);
+    z-index: 10;
+    transition: 300ms ease;
+}
+
+/* Animación al marcar */
+.checkBox input[type=checkbox]:checked + .transition {
+    left: -5px;
+    top: -5px;
+}
+
+/* Ocultar checkbox real pero mantener funcionalidad Vue */
+.checkBox input[type=checkbox] {
+    position: absolute;
+    opacity: 0; /* Usamos opacity 0 para que Vue no pierda el foco */
+    cursor: pointer;
+}
