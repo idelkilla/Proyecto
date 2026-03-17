@@ -223,5 +223,4 @@ onUnmounted(() => window.removeEventListener('mousedown', handleOutsideClick))
 
 <style scoped>
 @import "../assets/css/FormSearch.css";
-/* El estilo del input se hereda de tus clases .field-group y .border-style */
 </style>

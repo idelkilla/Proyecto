@@ -1,5 +1,6 @@
 <template>
-  <form class="modern-form" @submit.prevent="handleLogin">
+  <div class="login-page">
+    <form class="modern-form" @submit.prevent="handleLogin">
     <h2 class="form-title">Iniciar Sesión</h2>
 
     <div class="form-body">
@@ -92,6 +93,7 @@
       </a>
     </div>
   </form>
+  </div>
 </template>
 
 <script setup>

@@ -1,4 +1,5 @@
 <template>
+  <div class="login-page">
   <form class="modern-form" @submit.prevent="handleRegister">
     <h2 class="form-title">Crear Cuenta</h2>
 
@@ -101,6 +102,7 @@
       </a>
     </div>
   </form>
+  </div>
 </template>
 
 <script setup>

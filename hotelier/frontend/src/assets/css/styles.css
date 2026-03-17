@@ -8,39 +8,40 @@ html {
     height: 100%;
 }
 
-body {
-    height: 100%; 
-    min-height: 100%; 
-    overflow: hidden; 
+.login-page {
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0;
-    background-color: #f1f1f9;
-    font-family: system-ui, -apple-system, sans-serif;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../img/login_fondo.png');
+    background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('../img/login_fondo.png');
     background-size: cover;
     background-position: center;
 }
 
+body {
+    margin: 0;
+    padding: 0;
+    font-family: system-ui, -apple-system, sans-serif;
+    background-color: #f1f1f9;
+}
+
 .modern-form {
-    --primary: #265073;              /* Azul Cielo, de la barra superior de la web hotelera */
-    --primary-dark: #265073;         /* Azul Marino/Gris, de la barra de navegación o texto oscuro */
-    --primary-light: #e6f0f5;        /* Azul muy claro/casi blanco, del fondo del cielo */
-    --success: #00885b;              /* Mantengo tu color verde de éxito. El verde del agua es muy específico. */
-    --text-main: #265073;            /* Mantengo tu color, funciona bien con el contraste. */
-    --text-secondary: #707391;       /* Mantengo tu color, funciona bien con el contraste suave. */
-    --bg-input: #f8fbfc;  
-    --dark-blue: #191e3b;           /* Mantengo tu color, ideal para fondos de campo de entrada. */
+    --primary: #265073;
+    --primary-dark: #265073;
+    --primary-light: #e6f0f5;
+    --success: #00885b;
+    --text-main: #265073;
+    --text-secondary: #707391;
+    --bg-input: #f8fbfc;
+    --dark-blue: #191e3b;
 
     position: relative;
-    justify-content: center;
-    width: 100%; 
-    max-width: 400px; 
+    width: 100%;
+    max-width: 400px;
     padding: 24px;
     background: #ffffff;
     border-radius: 16px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.493);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.493);
 }
 
 
