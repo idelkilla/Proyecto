@@ -78,7 +78,7 @@
         v-for="chip in chips"
         :key="chip.id"
         :class="['cal-chip', { active: activeChip === chip.id }]"
-        @click="activeChip = chip.id"
+        @click="selectChip(chip.id)"
       >
         <svg
           v-if="chip.id !== 'exactas'"
@@ -179,9 +179,18 @@ function dayClasses(y, m, day) {
   if (date < today) return [...cls, 'past']
   if (t === today.getTime()) cls.push('today')
 
-  if (rangeStart.value) {
-    const start  = rangeStart.value.getTime()
-    const rawEnd = rangeEnd.value?.getTime() ?? hovering.value?.getTime() ?? null
+  // Usar displayStart/End si hay chip activo, si no usar rangeStart/End o hover
+  const lo_date = activeChip.value !== 'exactas' && displayStart.value
+    ? displayStart.value
+    : rangeStart.value
+
+  const hi_date = activeChip.value !== 'exactas' && displayEnd.value
+    ? displayEnd.value
+    : (rangeEnd.value ?? hovering.value ?? null)
+
+  if (lo_date) {
+    const start  = lo_date.getTime()
+    const rawEnd = hi_date?.getTime() ?? null
     const lo = rawEnd !== null ? Math.min(start, rawEnd) : start
     const hi = rawEnd !== null ? Math.max(start, rawEnd) : start
 
@@ -200,17 +209,19 @@ function handleClick(y, m, day) {
   if (date < today) return
 
   if (!rangeStart.value || rangeEnd.value) {
+    // Empezar nueva selección
     rangeStart.value = date
     rangeEnd.value   = null
+    activeChip.value = 'exactas'
   } else if (date.getTime() === rangeStart.value.getTime()) {
     rangeStart.value = null
   } else if (date < rangeStart.value) {
     rangeEnd.value   = rangeStart.value
     rangeStart.value = date
-    emitRange()
+    emitRange()   // rango completo
   } else {
     rangeEnd.value = date
-    emitRange()
+    emitRange()   // rango completo — el calendario NO se cierra
   }
 }
 
@@ -218,12 +229,38 @@ function emitRange() {
   const payload = { start: rangeStart.value, end: rangeEnd.value }
   emit('update:modelValue', payload)
   emit('range-selected', payload)
-  // Emite strings formateadas para el padre
   emit('update:dates', {
     start: formatDateStr(rangeStart.value),
     end:   formatDateStr(rangeEnd.value),
   })
 }
+
+// ── Chips con offset ───────────────────────────────────────────────────────
+function selectChip(id) {
+  activeChip.value = id
+  if (!rangeStart.value || !rangeEnd.value) return
+
+  // Calcular offset en días
+  const offsetMap = { 'exactas': 0, '1dia': 1, '2dias': 2, '3dias': 3, '7dias': 7 }
+  const offset = offsetMap[id] ?? 0
+
+  // El rango base es el rango exacto elegido
+  const startMs = rangeStart.value.getTime()
+  const endMs   = rangeEnd.value.getTime()
+
+  // Expandir rango: inicio - offset, fin + offset
+  const newStart = new Date(startMs - offset * 86400000)
+  const newEnd   = new Date(endMs   + offset * 86400000)
+
+  // No retroceder antes de hoy
+  displayStart.value = newStart < today ? today : newStart
+  displayEnd.value   = newEnd
+}
+
+// Fechas base (las que el usuario eligió)
+// Las fechas de display pueden diferir si hay chip activo
+const displayStart = ref(null)
+const displayEnd   = ref(null)
 
 // ── Navegación ─────────────────────────────────────────────────────────────
 function navigate(dir) {

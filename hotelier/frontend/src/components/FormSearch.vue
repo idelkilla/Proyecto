@@ -185,10 +185,7 @@ const fechaFin    = ref('')
 function onDatesSelected(dates) {
   fechaInicio.value = dates.start
   fechaFin.value    = dates.end
-  // Cierra el calendario solo cuando ambas fechas están seleccionadas
-  if (dates.start && dates.end) {
-    mostrarCalendario.value = false
-  }
+  // NO cerramos el calendario — el usuario lo cierra haciendo clic fuera
 }
 
 // Formatea "YYYY-MM-DD" → "mié 18 de mar"
