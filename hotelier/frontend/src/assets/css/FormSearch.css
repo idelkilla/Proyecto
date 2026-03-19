@@ -7,7 +7,7 @@
   --color-primary:      #265073;   /* azul principal — botones, bordes, íconos */
   --color-primary-dark: #1a3a54;   /* hover/sombra del primario */
 
-  
+  /* ── Fondos ──────────────────────────────── */
   --color-bg:           #ECF4D6;   /* fondo general de página */
   --color-white:        #ffffff;   /* tarjetas, formularios */
   --color-surface:      #f0f7ff;   /* hover suave en dropdowns */
