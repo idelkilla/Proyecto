@@ -130,21 +130,21 @@
                       <label class="checkBox"><input type="checkbox" id="casa"><div class="transition"></div></label>
                       <label for="casa" class="label-text">Apartamentos enteros</label>
                   </div>
-                  <span class="count-text">167</span>
+                  
               </div>
               <div class="accommodation-row">
                   <div class="checkbox-group">
                       <label class="checkBox"><input type="checkbox" id="aparthotel"><div class="transition"></div></label>
                       <label for="aparthotel" class="label-text">Apartahoteles</label>
                   </div>
-                  <span class="count-text">159</span>
+                
               </div>
               <div class="accommodation-row">
                   <div class="checkbox-group">
                       <label class="checkBox"><input type="checkbox" id="hoteles"><div class="transition"></div></label>
                       <label for="hoteles" class="label-text">Hoteles</label>
                   </div>
-                  <span class="count-text">107</span>
+              
               </div>
           </div>
         </div>
@@ -234,17 +234,7 @@
       </div>
       
       <div class="listings-column">
-        <h2>Más de {{ filteredHoteles.length }} propiedades</h2>
-
-        <div v-if="loading" style="padding: 2rem; color: #888; text-align: center;">
-          Buscando hospedajes...
-        </div>
-        <div v-else-if="errorMsg" style="padding: 2rem; color: #c0392b; text-align: center;">
-          {{ errorMsg }}
-        </div>
-        <div v-else-if="filteredHoteles.length === 0" style="padding: 2rem; color: #888; text-align: center;">
-          No se encontraron hospedajes disponibles para tu búsqueda.
-        </div>
+        <h2>{{ }}</h2>
         
         <div class="hotel-card" v-for="hotel in filteredHoteles" :key="hotel.id">
           <div class="card-image-placeholder slider-container">
