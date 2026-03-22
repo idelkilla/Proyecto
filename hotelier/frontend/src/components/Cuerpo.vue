@@ -174,7 +174,7 @@
                       </label>
                       <label for="casa" class="label-text">Apartamentos enteros</label>
                   </div>
-                  <span class="count-text">167</span>
+                  
               </div>
 
               <div class="accommodation-row">
@@ -185,7 +185,7 @@
                       </label>
                       <label for="aparthotel" class="label-text">Apartahoteles</label>
                   </div>
-                  <span class="count-text">159</span>
+                
               </div>
 
               <div class="accommodation-row">
@@ -196,7 +196,7 @@
                       </label>
                       <label for="hoteles" class="label-text">Hoteles</label>
                   </div>
-                  <span class="count-text">107</span>
+              
               </div>
 
           </div>
@@ -332,7 +332,7 @@
       </div>
       
       <div class="listings-column">
-        <h2>Más de {{ filteredHoteles.length }} propiedades</h2>
+        <h2>{{ }}</h2>
         
         <div class="hotel-card" v-for="hotel in filteredHoteles" :key="hotel.id">
           <div class="card-image-placeholder slider-container">
