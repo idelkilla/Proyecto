@@ -14,6 +14,8 @@
       <AnotaLaFecha />
       <TravelPropositions />
     </main>
+
+    <LoginPromoPopup />
   </div>
 </template>
 
@@ -22,6 +24,7 @@ import AppHeader from '../components/Header.vue'
 import FormSearch from '../components/FormSearch.vue'
 import AnotaLaFecha from '../components/AnotaLaFecha.vue'
 import TravelPropositions from '../components/TravelPropositions.vue'
+import LoginPromoPopup from '../components/LoginPromoPopup.vue'
 
 export default {
   name: 'Home',
@@ -29,8 +32,8 @@ export default {
     AppHeader,
     FormSearch,
     AnotaLaFecha,
-    // 2. Registrar el nuevo componente
-    TravelPropositions 
+    TravelPropositions,
+    LoginPromoPopup
   },
   methods: {
     handleSearch(formData) {
