@@ -275,16 +275,22 @@ function cerrarTodos() {
   mostrarCalendario.value = false
 }
 
-// ── Búsqueda ───────────────────────────────────────────────
 async function handleSearch() {
-  const payload = {
-    categoria:    activeOption.value,
-    destino:      busquedaDestino.value,
-    entrada:      fechaInicio.value,
-    salida:       fechaFin.value,
-    habitaciones: habitaciones.value,
+  if (!busquedaDestino.value || !fechaInicio.value || !fechaFin.value) {
+    alert('Por favor completa destino y fechas.')
+    return
   }
-  console.log('Buscando...', payload)
+
+  router.push({
+    path: '/hotel',
+    query: {
+      destino:    busquedaDestino.value,
+      entrada:    fechaInicio.value,
+      salida:     fechaFin.value,
+      habitaciones: JSON.stringify(habitaciones.value),
+      categoria:  activeOption.value,
+    }
+  })
 }
 
 // ── Clic fuera — cierra todos los dropdowns ────────────────

@@ -6,4 +6,5 @@ const router = express.Router();
 router.get('/ubicaciones', getUbicaciones);
 router.post('/buscar', postBuscarHospedaje);
 
+
 export default router;
