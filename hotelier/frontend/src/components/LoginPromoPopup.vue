@@ -26,7 +26,7 @@ import { ref, onMounted } from 'vue'
 const visible = ref(false)
 
 const estaLogueado = () => {
-  return !!localStorage.getItem('token') 
+  return !!localStorage.getItem('user_token') || !!localStorage.getItem('user_email')
 }
 
 onMounted(() => {
