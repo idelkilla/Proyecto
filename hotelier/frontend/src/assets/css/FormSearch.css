@@ -2,6 +2,55 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Caprasimo&family=Caveat:wght@449&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=DM+Serif+Display:ital@0;1&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Oswald:wght@200..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Reenie+Beanie&family=Special+Elite&family=Sue+Ellen+Francisco&family=Unna:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
+
+:root {
+  --color-primary:      #265073;   /* azul principal — botones, bordes, íconos */
+  --color-primary-dark: #1a3a54;   /* hover/sombra del primario */
+
+  /* ── Fondos ──────────────────────────────── */
+  --color-bg:           #ECF4D6;   /* fondo general de página */
+  --color-white:        #ffffff;   /* tarjetas, formularios */
+  --color-surface:      #f0f7ff;   /* hover suave en dropdowns */
+  --color-surface-alt:  #F8FBF9;   /* inputs, fondos secundarios */
+
+  /* ── Acentos ─────────────────────────────── */
+  --color-accent:       #2D9596;   /* teal — acciones secundarias */
+  --color-mint:         #9AD0C2;   /* mint — hover navbar, detalles */
+
+  /* ── Texto ───────────────────────────────── */
+  --color-text:         #1a1a1a;   /* texto principal fuerte */
+  --color-text-dark:    #333333;   /* labels, campos */
+  --color-text-medium:  #444444;   /* ítem spans, subtítulos */
+  --color-text-muted:   #5e6d77;   /* texto secundario suave */
+  --color-text-subtle:  #5e5e5e;   /* detalles, loc-details */
+  --color-placeholder:  #999999;   /* placeholder inputs */
+
+  /* ── Bordes ──────────────────────────────── */
+  --color-border:       #265073;   /* borde activo / primario */
+  --color-border-light: #cccccc;   /* borde por defecto inputs */
+  --color-border-soft:  #eeeeee;   /* separadores internos */
+
+  /* ── Tipografía ──────────────────────────── */
+  --font-display: 'Playfair Display', serif;
+  --font-body:    'Poppins', sans-serif;
+  --font-ui:      system-ui, Avenir, Helvetica, Arial, sans-serif;
+
+  /* ── Radios ──────────────────────────────── */
+  --radius-sm:  8px;    /* inputs, botones */
+  --radius-md:  18px;   /* tarjetas medianas */
+  --radius-lg:  22px;   /* form-box, tarjetas grandes */
+  --radius-pill:25px;   /* btn-listo, pills */
+
+  /* ── Sombras ─────────────────────────────── */
+  --shadow-card:   0 4px 24px rgba(38, 80, 115, 0.07);
+  --shadow-box:    0 8px 30px rgba(0, 0, 0, 0.20);
+  --shadow-popup:  0 10px 30px rgba(0, 0, 0, 0.15);
+  --shadow-search: 0 4px 10px rgba(0, 0, 0, 0.10);
+
+  /* ── Transición ──────────────────────────── */
+  --transition: 0.3s ease;
+}
+
 .search-container {
   width: 1900px;
   max-width: 100%;
@@ -89,11 +138,11 @@
 }
 
 .item.active {
-  border-bottom: 3px solid #265073;
+  border-bottom: 3px solid var(--color-primary);
 }
 
 .item.active span {
-  color: #265073;
+  color: var(--color-primary);
   font-weight: 700;
 }
 
@@ -119,9 +168,9 @@
 }
 
 .tabs .tab.active {
-  color: #265073;
+  color: var(--color-primary);
   font-weight: 600;
-  border-bottom: 3px solid #265073;
+  border-bottom: 3px solid var(--color-primary);
 }
 
 /* ------------------ SEARCH FIELDS ------------------ */
@@ -167,7 +216,7 @@
 
 .btn-search {
   padding: 12px 30px;
-  background-color: #265073;
+  background-color: var(--color-primary);
   color: white;
   border: none;
   border-radius: 8px;
@@ -183,7 +232,7 @@
 }
 
 .btn-search:hover {
-  background-color: #265073;
+  background-color: var(--color-primary);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -221,7 +270,7 @@
   top: 50%;
   transform: translateY(-50%);
   font-size: 20px;
-  color: #265073;
+  color: var(--color-primary);
   z-index: 10;
 }
 
@@ -257,7 +306,7 @@
 .info-text {
   font-size: 14px;
   font-weight: 400;
-  color: #265073;
+  color: var(--color-primary);
   text-decoration: underline;
   margin-top: -15px;
   width: 100%;
@@ -381,7 +430,7 @@
 .custom-icon {
   position: absolute;
   left: 12px;
-  color: #265073;
+  color: var(--color-primary);
   font-size: 22px;
   pointer-events: none; 
   user-select: none;
@@ -392,14 +441,14 @@
   width: 100%;
   height: 52px;
   padding: 10px 12px 10px 45px !important; 
-  border: 1px solid #265073;
+  border: 1px solid var(--color-primary);
   border-radius: 8px;
   font-size: 16px;
   outline: none;
 }
 
 .field-group input:focus {
-  border: 2px solid #265073;
+  border: 2px solid var(--color-primary);
 }
 
 .location-dropdown {
@@ -461,7 +510,7 @@
 .hab-title { font-weight: 700; color: #1a1a1a; }
 
 .eliminar-hab {
-  color: #265073;
+  color: var(--color-primary);
   font-size: 13px;
   cursor: pointer;
   font-weight: 600;
@@ -483,9 +532,9 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  border: 1px solid #265073;
+  border: 1px solid var(--color-primary);
   background: #fff;
-  color: #265073;
+  color: var(--color-primary);
   font-size: 20px;
   cursor: pointer;
 }
@@ -498,13 +547,13 @@
 }
 
 .add-room-link {
-  color: #265073;
+  color: var(--color-primary);
   font-weight: 700;
   cursor: pointer;
 }
 
 .btn-listo {
-  background: #265073;
+  background: var(--color-primary);
   color: white;
   border: none;
   padding: 12px;
@@ -567,7 +616,7 @@
 .hab-title { font-weight: 700; color: #1a1a1a; }
 
 .eliminar-hab {
-  color: #265073;
+  color: var(--color-primary);
   font-size: 13px;
   cursor: pointer;
   font-weight: 600;
@@ -589,9 +638,9 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  border: 1px solid #265073;
+  border: 1px solid var(--color-primary);
   background: #fff;
-  color: #265073;
+  color: var(--color-primary);
   font-size: 20px;
   cursor: pointer;
 }
@@ -604,13 +653,13 @@
 }
 
 .add-room-link {
-  color: #265073;
+  color: var(--color-primary);
   font-weight: 700;
   cursor: pointer;
 }
 
 .btn-listo {
-  background: #265073;
+  background: var(--color-primary);
   color: white;
   border: none;
   padding: 12px;
@@ -647,12 +696,12 @@
   gap: 8px;
   cursor: pointer;
   font-size: 0.9rem;
-  color: #265073;
+  color: var(--color-primary);
 }
 
 .custom-checkbox input {
   width: 18px;
   height: 18px;
-  accent-color: #265073;
+  accent-color: var(--color-primary);
 }
 

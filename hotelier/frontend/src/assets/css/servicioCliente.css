@@ -1,0 +1,316 @@
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap');
+
+:root {
+  --color-primary:      #265073;   /* azul principal — botones, bordes, íconos */
+  --dark: #191e3b;   /* hover/sombra del primario */
+  /* ── Fondos ──────────────────────────────── */
+  --color-bg:           #ECF4D6;   /* fondo general de página */
+  --color-white:        #ffffff;   /* tarjetas, formularios */
+  --color-surface:      #f0f7ff;   /* hover suave en dropdowns */
+  --color-surface-alt:  #F8FBF9;   /* inputs, fondos secundarios */
+  /* ── Acentos ─────────────────────────────── */
+  --color-accent:       #2D9596;   /* teal — acciones secundarias */
+  --color-mint:         #9AD0C2;   /* mint — hover navbar, detalles */
+  /* ── Texto ───────────────────────────────── */
+  --color-text:         #1a1a1a;   /* texto principal fuerte */
+  --color-text-dark:    #333333;   /* labels, campos */
+  --color-text-medium:  #444444;   /* ítem spans, subtítulos */
+  --color-text-muted:   #5e6d77;   /* texto secundario suave */
+  --color-text-subtle:  #5e5e5e;   /* detalles, loc-details */
+  --color-placeholder:  #999999;   /* placeholder inputs */
+  /* ── Bordes ──────────────────────────────── */
+  --color-border:       #265073;   /* borde activo / primario */
+  --color-border-light: #cccccc;   /* borde por defecto inputs */
+  --color-border-soft:  #eeeeee;   /* separadores internos */
+  /* ── Tipografía ──────────────────────────── */
+  --font-display: 'Playfair Display', serif;
+  --font-body:    'Poppins', sans-serif;
+  --font-ui:      system-ui, Avenir, Helvetica, Arial, sans-serif;
+  /* ── Radios ──────────────────────────────── */
+  --radius-sm:  8px;    /* inputs, botones */
+  --radius-md:  18px;   /* tarjetas medianas */
+  --radius-lg:  22px;   /* form-box, tarjetas grandes */
+  --radius-pill:25px;   /* btn-listo, pills */
+  /* ── Sombras ─────────────────────────────── */
+  --shadow-card:   0 4px 24px rgba(38, 80, 115, 0.07);
+  --shadow-box:    0 8px 30px rgba(0, 0, 0, 0.20);
+  --shadow-popup:  0 10px 30px rgba(0, 0, 0, 0.15);
+  --shadow-search: 0 4px 10px rgba(0, 0, 0, 0.10);
+  /* ── Transición ──────────────────────────── */
+  --transition: 0.3s ease;
+}
+
+/* BASE */
+.page {
+  font-family: 'Inter', sans-serif;
+  background: #ffffff;
+  color: #265073;
+}
+
+/* NAVBAR */
+.navbar {
+  background: #265073;
+  padding: 18px 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #265073;
+  cursor: pointer;
+  width: auto;
+  padding: 5px;
+}
+
+.close-btn:hover {
+  color: #2d9596;
+}
+
+.menu {
+  list-style: none;
+  display: flex;
+  gap: 35px;
+}
+
+.menu {
+  color: #ecf4d6;
+  text-decoration: none;
+  font-weight: 400;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  font-size: 13px;
+}
+
+/* CONTENEDOR */
+.container {
+  max-width: 1100px;
+  margin: 60px auto;
+  padding: 20px;
+}
+
+/* TITULOS */
+h2 {
+  text-align: left;
+  color: #191e3b;
+  font-size: 34px;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  letter-spacing: 0.5px;
+}
+
+/* SERVICIOS */
+.services {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 35px;
+}
+
+.card {
+  background: #265073;
+  border-radius: 30px;
+  padding: 40px 28px;
+  text-align: center;
+  box-shadow: none;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+}
+
+.card h3 {
+  margin-top: 18px;
+  color: #ffffff;
+  letter-spacing: 0.3px;
+}
+
+.card p {
+  color: #ffffff;
+  font-size: 15px;
+}
+
+.icon {
+  font-size: 40px;
+  color: #ffffff;
+}
+
+/* FORMULARIO */
+.contacto form {
+  max-width: 650px;
+  margin: auto;
+  background: #ffffff;
+  padding: 45px;
+  border-radius: 22px;
+  box-shadow: none;
+  
+}
+
+label {
+  font-weight: 500;
+  margin-top: 18px;
+  display: block;
+  color: #191e3b;
+  letter-spacing: 0.3px;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  margin-top: 6px;
+  padding: 13px;
+  border-radius: 12px;
+  border: 1px solid #265073;
+  font-size: 14px;
+  background: #f8fbf9;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: #265073;
+}
+
+/* BOTÓN */
+button {
+  display: block;
+  margin: 20px auto 0;
+  width: 30%;
+  padding: 13px;
+  border-radius: 30px;
+  border: none;
+  background: #265073;
+  color: #ecf4d6;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+button:hover {
+  opacity: 0.95;
+  cursor: pointer;
+}
+
+/* MENSAJE */
+.ok {
+  margin-top: 15px;
+  text-align: center;
+  color: #2d9596;
+  font-weight: 500;
+}
+/* AYUDA LUJO */
+.help-luxury {
+  margin-bottom: 60px;
+}
+
+.help-luxury h2 {
+  font-size: 32px;
+  margin-bottom: 60px;
+}
+
+/* GRID LIMPIO */
+.luxury-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 26px;
+}
+
+/* TARJETA LUJO */
+.luxury-item {
+  background: #ffffff;
+  border-radius: 30px;
+  padding: 15px 28px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border: 1px solid #265073;
+  transition: all 0.35s ease;
+}
+
+/* PANEL LATERAL */
+.side-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 360px;
+  height: 100vh;
+  background: #ffffff;
+  padding: 30px 26px;
+  box-shadow: none;
+  z-index: 3000;
+  overflow-y: auto;
+  justify-content: center;
+}
+
+/* ICONO FINO */
+.luxury-item i {
+  font-size: 18px;
+  color: #265073;
+  opacity: 0.9;
+}
+
+/* TEXTO FINO */
+.luxury-item span {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.4px;
+  color: #265073;
+}
+
+/* HOVER ELEGANTE */
+.luxury-item:hover {
+  box-shadow: none;
+  transform: translateY(-3px);
+}
+
+.saludo{
+    font-weight: 700;
+    text-align: left;
+    color: #191e3b;
+    font-size: 30px;
+    margin-bottom: 30px;    
+    
+}
+
+.img_reserva {
+  display: block;
+  margin: 30px auto 0;
+  width: 50px;
+  height: auto;
+}
+
+.info_reserva {
+  text-align: center;
+  color: #265073;
+  font-size: 16px;
+  margin-top: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.secondary-btn{
+  display: block;
+  margin: 10px auto 0;
+  width: 20%;
+  padding: 13px;
+  border-radius: 30px;
+  border: none;
+  background: transparent;
+  color: #191e3b;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.secondary-btn:hover {
+  background-color: #f0f7ff;
+  color: #265073;
+  box-shadow: none;
+}

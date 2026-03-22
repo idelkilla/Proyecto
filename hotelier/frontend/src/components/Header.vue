@@ -30,7 +30,9 @@
 
     <div class="header-right">
       <nav class="header-links">
-        <a>Servicio al cliente</a>
+        <router-link to="/servicio-cliente" custom v-slot="{ navigate }">
+          <a @click="navigate" role="link" style="cursor: pointer;" >Servicio al cliente</a>
+        </router-link>
         <a>Mis viajes</a>
       </nav>
 

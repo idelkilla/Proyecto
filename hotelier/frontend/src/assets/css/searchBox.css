@@ -1,0 +1,90 @@
+:root {
+  --color-primary:      #265073;
+  --dark:               #191e3b;
+  --color-bg:           #ECF4D6;
+  --color-white:        #ffffff;
+  --color-surface:      #f0f7ff;
+  --color-surface-alt:  #F8FBF9;
+  --color-accent:       #2D9596;
+  --color-mint:         #9AD0C2;
+  --color-text:         #1a1a1a;
+  --color-text-dark:    #333333;
+  --color-text-medium:  #444444;
+  --color-text-muted:   #5e6d77;
+  --color-text-subtle:  #5e5e5e;
+  --color-placeholder:  #999999;
+  --color-border:       #265073;
+  --color-border-light: #cccccc;
+  --color-border-soft:  #eeeeee;
+  /* ── Estas faltaban ── */
+  --font-body:    'Poppins', sans-serif;
+  --radius-pill:  30px;
+  --transition:   0.3s ease;
+}
+
+.search-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.search-input-box {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 48px;
+  padding: 0 18px;
+  border-radius: var(--radius-pill);
+  border: 2px solid #265073;
+  transition: border var(--transition);
+  border-radius: 30px;
+}
+
+.search-input-box.focused {
+  border-color: #191e3b;
+}
+
+.search-input-box input {
+  flex: 1;
+  height: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--color-text);
+  margin-top: 0;
+  padding: 0;
+  border-radius: 0;
+  width: 100%;
+}
+
+.search-input-box input::placeholder {
+  color: #265073;
+}
+
+.search-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0 24px;
+  border-radius: var(--radius-pill);
+  border: none;
+  background-color: #265073;
+  color: var(--color-white);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  margin-top: 0;
+  width: auto;
+  letter-spacing: 0.3px;
+  transition: background var(--transition);
+  border-radius: 30px;
+}
+
+

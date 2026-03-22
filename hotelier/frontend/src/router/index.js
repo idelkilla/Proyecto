@@ -5,6 +5,7 @@ import Home from '../view/Home.vue';
 import authService from '../services/authService';
 import servicesMenu from '../components/servicesMenu.vue';
 import head from "../view/head.vue";
+import servicioCliente from '../view/servicioCliente.vue'; 
 
 const routes = [
   { path: '/login', name: 'Login', component: Login },
@@ -13,6 +14,7 @@ const routes = [
   { path: '/services', name: 'servicesMenu', component: servicesMenu },
   { path: '/', redirect: '/home' },
   { path: "/head", name: "Head", component: head},
+  { path: "/servicio-cliente", name: "ServicioCliente", component: servicioCliente }
 ];
 
 const router = createRouter({

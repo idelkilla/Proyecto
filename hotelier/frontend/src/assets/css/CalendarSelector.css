@@ -1,124 +1,267 @@
-.booking-wrapper {
-  --booking-yellow: #ffb700;
-  --booking-blue: #0071c2;
-  --border-radius: 8px;
-  
-  display: inline-block;
-  background: var(--booking-yellow);
-  padding: 4px;
-  border-radius: var(--border-radius);
-  font-family: 'BlinkMacSystemFont', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+/* ─────────────────────────────────────────────────────────
+   CalendarSelector.css  —  src/assets/css/CalendarSelector.css
+   ───────────────────────────────────────────────────────── */
+
+:root {
+  --cal-border:     #e0e0e0;
+
 }
 
-.search-bar-main {
-  display: flex;
-  gap: 4px;
-}
-
-.field-container {
-  background: white;
-  height: 52px;
-  display: flex;
-  align-items: center;
-  padding: 0 16px;
-  border-radius: 4px;
-  cursor: pointer;
-  min-width: 250px;
-}
-
-.text-display {
-  font-size: 14px;
-  font-weight: 500;
-  color: #1a1a1a;
-  margin-left: 12px;
-  flex-grow: 1;
-}
-
-.btn-submit {
-  background: var(--booking-blue);
-  color: white;
-  border: none;
-  padding: 0 40px;
-  font-size: 20px;
-  font-weight: 500;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.btn-submit:hover { background: #005999; }
-
-/* Calendario Estilo Pop-up */
+/* ── Modal ──────────────────────────────────────────────────
+   Igual que .guests-dropdown: absolute, top:100%, left:0
+   El padre (field-group / input-with-icon) debe tener
+   position: relative para que este se ancle a él.
+──────────────────────────────────────────────────────────── */
 .calendar-modal {
   position: absolute;
+  top: calc(100% + 8px);   /* 8px debajo del input */
+  left: 0;
+  z-index: 200;
+
   background: white;
-  margin-top: 8px;
-  border-radius: 12px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
-  padding: 24px;
-  width: 780px;
-  z-index: 1000;
+  border-radius: 30px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+  width: 760px;
+  user-select: none;
+  font-family: 'BlinkMacSystemFont', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  animation: cal-drop-in 0.16s ease;
 }
 
-.tabs {
-  border-bottom: 1px solid #e7e7e7;
-  margin-bottom: 20px;
+@keyframes cal-drop-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0);    }
 }
 
-.tab-item {
-  border: none; background: none;
-  padding: 12px 24px;
-  font-size: 14px;
+/* ── Tabs ────────────────────────────────────────────────── */
+.cal-tabs {
+  border-radius: 30px;
+  display: flex;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.cal-tab {
+  flex: 1;
+  background: none;
+  border: none;
+  padding: 14px 0;
+  font-size: 15px;
+  font-family: inherit;
+  font-weight: 500;
+  color: #6e6e6e;
   cursor: pointer;
-  color: #1a1a1a;
+  position: relative;
+  transition: color .2s;
 }
 
-.tab-item.active {
-  border-bottom: 2px solid var(--booking-blue);
-  color: var(--booking-blue);
-  font-weight: 600;
+.cal-tab.active {
+  color: #0071c2;
+  font-weight: 700;
 }
 
-.days-body {
+.cal-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0; right: 0;
+  height: 2px;
+  background: #0071c2;
+  border-radius: 2px 2px 0 0;
+}
+
+/* ── Grid dos meses ──────────────────────────────────────── */
+.cal-grid {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 2px;
+  grid-template-columns: 1fr auto 1fr;
+  padding: 24px 28px 8px;
 }
 
-.day-cell {
-  height: 44px;
+.cal-month { min-width: 0; }
+
+.cal-divider {
+  width: 1px;
+  background: #e0e0e0;
+  margin: 0 16px;
+  align-self: stretch;
+}
+
+/* ── Encabezado de mes ───────────────────────────────────── */
+.cal-month-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 15px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 16px;
+  text-transform: capitalize;
+}
+
+.cal-nav {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #6e6e6e;
+  padding: 4px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  border-radius: 4px;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  transition: background .15s, color .15s;
 }
 
-.selected-range {
-  background-color: var(--booking-blue);
-  color: white;
-  font-weight: bold;
+.cal-nav:hover {
+  background: #f0f0f0;
+  color: #1a1a1a;
 }
 
-.calendar-footer {
+/* ── Encabezado días semana ──────────────────────────────── */
+.cal-week-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 4px;
+}
+
+.cal-week-header span {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: #888;
+  padding: 4px 0 8px;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+/* ── Celdas de días ──────────────────────────────────────── */
+.cal-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
+}
+
+.cal-day {
+  height: 40px;
   display: flex;
-  gap: 12px;
-  margin-top: 24px;
-  padding-top: 16px;
-  border-top: 1px solid #e7e7e7;
-}
-
-.chip {
-  background: white;
-  border: 1px solid #e7e7e7;
-  padding: 8px 16px;
-  border-radius: 20px;
+  align-items: center;
+  justify-content: center;
   font-size: 14px;
+  font-weight: 500;
+  color: #1a1a1a;
   cursor: pointer;
+  border-radius: 50%;
+  transition: background .12s, color .12s;
+  position: relative;
+  z-index: 1;
 }
 
-.chip.active {
-  background: #f0f6ff;
-  border-color: var(--booking-blue);
-  color: var(--booking-blue);
+.cal-day:not(.empty):not(.past):hover {
+  background: #d6eaf8;
+  color: #0071c2;
 }
+
+.cal-day.empty {
+  cursor: default;
+  pointer-events: none;
+}
+
+/* Hoy */
+.cal-day.today:not(.range-start):not(.range-end):not(.in-range) {
+  color: #0071c2;
+  font-weight: 700;
+}
+
+.cal-day.today:not(.range-start):not(.range-end):not(.in-range)::before {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: #0071c2;
+}
+
+/* Pasados */
+.cal-day.past {
+  color: #bbb;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* Banda de rango */
+.cal-day.in-range {
+  background: #d6eaf8;
+  color: #0071c2;
+  border-radius: 0;
+}
+
+/* Inicio y fin */
+.cal-day.range-start,
+.cal-day.range-end {
+  color: #fff;
+  font-weight: 700;
+  background: #d6eaf8;
+}
+
+.cal-day.range-start { border-radius: 50% 0 0 50%; }
+.cal-day.range-end   { border-radius: 0 50% 50% 0; }
+
+.cal-day.range-start::after,
+.cal-day.range-end::after {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  background: #003580;
+  border-radius: 50%;
+  z-index: -1;
+}
+
+/* Día único */
+.cal-day.range-start.range-end {
+  border-radius: 50%;
+  background: transparent;
+}
+
+/* ── Footer ──────────────────────────────────────────────── */
+.cal-footer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 28px 22px;
+  border-top: 1px solid #ececec;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+/* ── Chips ───────────────────────────────────────────────── */
+.cal-chip {
+  background: #fff;
+  border: 1px solid #d0d0d0;
+  padding: 7px 14px;
+  border-radius: 20px;
+  font-size: 13.5px;
+  font-family: inherit;
+  font-weight: 500;
+  color: #3a3a3a;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: border-color .15s, background .15s, color .15s;
+}
+
+.cal-chip:hover {
+  border-color: #0071c2;
+  color: #0071c2;
+}
+
+.cal-chip.active {
+  background: #f0f7ff;
+  border-color: #0071c2;
+  color: #0071c2;
+  font-weight: 700;
+}
+
+.cal-chip svg { flex-shrink: 0; }
