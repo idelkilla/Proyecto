@@ -1,3 +1,4 @@
+
 :root {
     --main-color: #113955;
 }
@@ -32,9 +33,9 @@ html {
 }
 
 .search-section-container {
-    width: 100%; 
-    max-width: 1800px; 
-    margin-top: 0px;
+    width: 90%; 
+    max-width: 90%; 
+    margin-top: 5px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -284,6 +285,7 @@ html {
     margin: 25px auto;
     width: 100%;
     max-width: 800px;
+    align-items: center;
 }
 
 .tab {
@@ -331,10 +333,10 @@ html {
 }
 
 .filters-column {
-    padding-top: 25px;
+    padding-top: 17px;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 10px;
     font-family: sans-serif;
 }
 
@@ -359,8 +361,8 @@ html {
 .filter-option input[type="checkbox"] {
     appearance: none;
     -webkit-appearance: none;
-    width: 16px;
-    height: 16px;
+    width: 11px;
+    height: 11px;
     border: 1px solid #333;
     border-radius: 50px;
     margin-right: 10px;
@@ -374,15 +376,15 @@ html {
     border: 2px solid #113955; 
     background-color: #113955;
 }
-
 .hotel-card {
-    display: flex;
-    border: 1px solid #ddd;
-    border-radius: 12px;
-    margin-bottom: 30px;
-    overflow: hidden;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  max-width: 650px; /* Reducido de 800px */
+  height: auto; 
+  padding: 5px;    /* Reducido de 7px */
+  margin-right: 00px;
+  display: flex; 
+  gap: 10px;       /* Reducido de 15px */
+  border-radius: 12px; /* Reducido de 16px */
+  
 }
 
 .hotel-card:hover {
@@ -392,27 +394,27 @@ html {
 
 .card-details {
     flex-grow: 1;
-    padding: 15px 15px 15px 10px !important;
+    padding: 10px 10px 10px 8px !important; /* Reducido proporcionalmente */
     display: flex;
     flex-direction: column;
 }
 
 .card-details h3 {
     color: #1a4f78; 
-    font-size: 20px;
+    font-size: 17px; /* Reducido de 20px */
     margin-bottom: 2px;
     margin-left: 0 !important;
 }
 
 .price-group {
-    transform: translateY(30px) !important; 
+    transform: translateY(15px) !important; /* Reducido de 30px para que no se salga */
     text-align: right;
 }
 
 .card-pricing {
-    width: 240px;
-    padding: 24px 20px !important;
-    padding-top: 40px !important;
+    width: 180px; /* Reducido de 240px */
+    padding: 15px 12px !important; /* Reducido de 24px 20px */
+    padding-top: 25px !important; /* Reducido de 40px */
     flex-shrink: 0;
     text-align: right;
     display: flex;
@@ -424,39 +426,39 @@ html {
 .total-price {
     color: black;
     font-weight: 500;
-    font-size: 20px;
+    font-size: 17px; /* Reducido de 20px */
 }
 
 .price-per-night {
     color: black;
     font-weight: 500;
-    font-size: 20px;
-    margin-top: 15px;
+    font-size: 17px; /* Reducido de 20px */
+    margin-top: 8px; /* Reducido de 15px */
 }
 
 .rating-info {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px; /* Reducido de 8px */
     color: #000000;
-    margin-top: 85px !important;
-    font-size: 15px;
+    margin-top: 45px !important; /* Reducido de 85px para que quepa en la card pequeña */
+    font-size: 13px; /* Reducido de 15px */
     font-weight: 500;
 }
 
 .rating {
     background-color: #e31c1c;
     color: white !important;
-    padding: 2px 8px;
+    padding: 1px 6px; /* Reducido de 2px 8px */
     border-radius: 6px;
     font-weight: bold;
-    font-size: 14px;
+    font-size: 12px; /* Reducido de 14px */
     display: inline-block;
 }
 
 .subtitle {
     color: #666;
-    font-size: 14px;
+    font-size: 12px; /* Reducido de 14px */
     margin-left: 0 !important;
     margin-top: 0;
 }
@@ -465,11 +467,11 @@ html {
     display: inline-flex;
     align-items: center;
     gap: 2px;
-    padding: 4px 10px;
-    border-radius: 15px;
-    font-size: 12px;
+    padding: 3px 8px; /* Reducido de 4px 10px */
+    border-radius: 12px; /* Reducido de 15px */
+    font-size: 11px; /* Reducido de 12px */
     color: #113955;
-    margin-right: 5px;
+    margin-right: 4px; /* Reducido de 5px */
 }
 
 .rating-text-stack {
@@ -482,11 +484,11 @@ html {
 .rating-status {
     font-weight: bold;
     color: #333;
-    font-size: 14px;
+    font-size: 12px; /* Reducido de 14px */
 }
 
 .reviews {
-    font-size: 12px;
+    font-size: 11px; /* Reducido de 12px */
     color: #666;
 }
 
@@ -496,26 +498,31 @@ html {
     display: inline-block;
 }
 
-.card-image-placeholder {
-    width: 42%;
-    height: auto;
-    min-height: 320px;
+
+.card-image-placeholder slider-container{
     background-color: #eee;
+}
+.card-image-placeholder {
+    width: 35%; 
+    height: auto;
+    min-height: 220px;
+    background-color: transparent; /* Esto ya lo hiciste */
     flex-shrink: 0;
     overflow: hidden;
     position: relative;
+    display: flex; /* AGREGA ESTO para que controle a la imagen */
 }
 
 .hotel-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    display: block;
+  width: 100%;      /* CAMBIA A 100% para que llene el ancho */
+  height: 100%;     /* CAMBIA A 100% para que llene el alto */
+  object-fit: cover; /* Esto evita que la imagen se vea estirada o deforme */
+  display: block;
+  border-radius: 16px;
 }
 
 .taxes-info {
-    font-size: 12px;
+    font-size: 11px; /* Reducido de 12px */
     color: #008009; 
     font-weight: 500;
 }
@@ -529,10 +536,10 @@ html {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.5);
+    background: #ffffff;
     color: #113955;
     border: none !important;
-    padding: 10px;
+    padding: 8px; /* Reducido de 10px */
     cursor: pointer;
     z-index: 2;
     border-radius: 50px;
@@ -540,8 +547,8 @@ html {
     -webkit-tap-highlight-color: transparent;
 }
 
-.left { left: 10px; }
-.right { right: 10px; }
+.left { left: 8px; }
+.right { right: 8px; }
 
 .slider-dots {
     position: absolute;
@@ -553,9 +560,9 @@ html {
 }
 
 .slider-dots span {
-    width: 8px;
-    height: 8px;
-    background: rgba(255, 255, 255, 0.5);
+    width: 6px; /* Reducido de 8px */
+    height: 6px; /* Reducido de 8px */
+    background: rgb(255, 255, 255);
     border-radius: 50%;
 }
 
@@ -566,10 +573,10 @@ html {
 .wishlist-button {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12) !important;
     position: absolute !important;
-    top: 15px !important;
-    right: 15px !important;
-    width: 50px !important; 
-    height: 50px !important;
+    top: 10px !important; /* Reducido de 15px */
+    right: 10px !important; /* Reducido de 15px */
+    width: 38px !important;  /* Reducido de 50px */
+    height: 38px !important; /* Reducido de 50px */
     background: white !important;
     border-radius: 50% !important;
     display: flex !important;
@@ -596,8 +603,8 @@ html {
 }
 
 .heart-svg-fix {
-    width: 32px !important; 
-    height: 32px !important;
+    width: 24px !important; /* Reducido de 32px */
+    height: 24px !important; /* Reducido de 32px */
     stroke: #ff385c !important; 
     stroke-width: 2px !important;
     fill: none;
@@ -605,61 +612,50 @@ html {
 }
 
 .wishlist-button svg {
-    width: 28px !important;
-    height: 28px !important;
+    width: 22px !important; /* Reducido de 28px */
+    height: 22px !important; /* Reducido de 28px */
     display: block;
 }
 
 .wishlist-button svg:active {
     fill: #e31c5f;
 }
+/* ===== ALOJAMIENTO CORREGIDO ===== */
 
-.accommodation-section {
-    width: 100%;
-    margin-top: 25px;
-    padding-left: 0;
-}
 
+/* Título EXACTAMENTE igual */
 .filter-title-bold {
     font-size: 16px;
     font-weight: bold;
     color: #113955;
-    margin-bottom: 15px;
-}
-
-.accommodation-list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.accommodation-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
+    margin-left: 30px;
     margin-bottom: 12px;
 }
 
+/* Cada opción EXACTAMENTE igual a .filter-option */
 .checkbox-group {
+    margin-left: 40px;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    color: #333;
 }
 
+/* Checkbox EXACTAMENTE igual */
 .checkbox-group input[type="checkbox"] {
     appearance: none;
     -webkit-appearance: none;
-    width: 16px;
-    height: 16px;
+    width: 11px;          /* 👈 antes 16px (esto desalineaba) */
+    height: 11px;         /* 👈 igual que filtros */
     border: 1px solid #333;
-    border-radius: 50%;
+    border-radius: 50px;
     margin-right: 10px;
     display: grid;
     place-content: center;
     cursor: pointer;
     background-color: #fff;
-    transition: all 0.2s;
 }
 
 .checkbox-group input[type="checkbox"]:checked {
@@ -667,21 +663,12 @@ html {
     background-color: #113955;
 }
 
+/* Texto EXACTO */
 .checkbox-group label {
-    font-size: 14px;
+    font-size: 13px;
     color: #333;
     cursor: pointer;
 }
-
-.label-text {
-    cursor: pointer;
-}
-
-.count-text {
-    font-size: 14px;
-    color: #888;
-}
-
 .services-section {
     margin-top: 30px;
     width: 100%;
@@ -816,4 +803,52 @@ html {
     position: absolute;
     opacity: 0;
     cursor: pointer;
+}
+
+
+/* Esta es la sección que envuelve los alojamientos */
+.accommodation-section {
+    width: 100%;
+    margin-top: 20px;
+    padding-left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* Mismo gap que los filtros de arriba */
+}
+
+/* El título "Tipo de alojamiento" */
+.accommodation-section p {
+    font-size: 14px;
+    font-weight: bold;
+    margin-left: 15px; /* Ajustado para alinear con los otros títulos */
+    margin-bottom: 8px;
+    color: #113955;
+    font-family: sans-serif;
+}
+
+/* Cada opción de alojamiento (Hotel, Apartamento, etc.) */
+.accommodation-option {
+    margin-left: 20px; /* Ajustado a 20px para que el checkbox alinee con los de arriba */
+    display: flex;
+    align-items: center;
+    gap: 8px; 
+    margin-bottom: 6px;
+    font-size: 12px;
+    color: #333;
+    font-family: sans-serif;
+}
+
+/* Asegúrate de que el checkbox mida lo mismo que los otros */
+.accommodation-option input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 10px; 
+    height: 10px;
+    border: 1px solid #333;
+    border-radius: 50px;
+    margin-right: 8px;
+    display: grid;
+    place-content: center;
+    cursor: pointer;
+    background-color: #fff;
 }
