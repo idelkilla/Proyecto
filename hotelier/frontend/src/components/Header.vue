@@ -10,28 +10,27 @@
       <div class="header-subtitle" @click.stop="toggleServicesMenu">
         <span>Planea tu viaje</span>
         <div class="chevron" :class="{ open: showServicesMenu }">
-  <svg width="14" height="14" fill="none" viewBox="0 0 20 20">
-    <path
-      d="M5 7.5L10 12.5L15 7.5"
-      stroke="#191E3B"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-    />
-  </svg>
-</div>
+          <svg width="14" height="14" fill="none" viewBox="0 0 20 20">
+            <path
+              d="M5 7.5L10 12.5L15 7.5"
+              stroke="#191E3B"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </div>
       </div>
     </div>
 
-    <ServicesMenu
-      v-if="showServicesMenu"
-      class="services-menu"
-    />
+    <ServicesMenu v-if="showServicesMenu" class="services-menu" />
 
     <div class="header-right">
       <nav class="header-links">
         <router-link to="/servicio-cliente" custom v-slot="{ navigate }">
-          <a @click="navigate" role="link" style="cursor: pointer;" >Servicio al cliente</a>
+          <a @click="navigate" role="link" style="cursor: pointer"
+            >Servicio al cliente</a
+          >
         </router-link>
         <a>Mis viajes</a>
       </nav>
@@ -64,7 +63,11 @@
           ]"
         >
           <template v-if="user.photo && user.photo.startsWith('http')">
-            <img :src="fixPhoto(user.photo)" alt="User photo" />
+            <img
+              :src="fixPhoto(user.photo)"
+              alt="User photo"
+              @error="handlePhotoError"
+            />
           </template>
           <template v-else-if="user.photo && user.photo.startsWith('initial:')">
             {{ user.photo.split(':')[1] }}
@@ -130,12 +133,21 @@ const handleClickOutside = (e) => {
   }
 }
 
+const fixEncoding = (str) => {
+  if (!str) return str
+  try {
+    return decodeURIComponent(escape(str))
+  } catch {
+    return str
+  }
+}
+
 // Cargar datos de usuario
 const loadUserData = () => {
   const photo = localStorage.getItem('user_photo')
-  const name = localStorage.getItem('user_name')
+  const name = fixEncoding(localStorage.getItem('user_name')) // 👈
   const emailStored = localStorage.getItem('user_email')
-  const initialStored = localStorage.getItem('user_initial')
+  const initialStored = fixEncoding(localStorage.getItem('user_initial')) // 👈
 
   user.value.photo = photo || null
   user.value.name = name || null
@@ -162,9 +174,7 @@ const fixPhoto = (url) => {
     : url
 }
 
-const isLogged = computed(() =>
-  Boolean(localStorage.getItem('user_token'))
-)
+const isLogged = computed(() => Boolean(localStorage.getItem('user_token')))
 
 const goToRegister = () => router.push('/register')
 </script>

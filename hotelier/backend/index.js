@@ -8,6 +8,11 @@ import searchRoutes from './routes/searchRoutes.js'
 
 const app = express()
 
+app.use((req, res, next) => {
+    res.setHeader('Cross-Origin-Opener-Policy', 'same-origin-allow-popups');
+    next();
+});
+
 app.use(cors())
 app.use(express.json())
 

@@ -14,8 +14,19 @@ export const connectDB = async () => {
 
   pool = new Pool({
     connectionString,
+    ssl: { rejectUnauthorized: false },
     max: 10,
-    idleTimeoutMillis: 30000
+    idleTimeoutMillis: 10000,
+    connectionTimeoutMillis: 5000,
+  })
+
+  pool.on('error', (err) => {
+    console.error('Pool error (ignorado):', err.message)
+  })
+
+  // 👇 Agrega esto
+  pool.on('connect', (client) => {
+    client.query("SET client_encoding = 'UTF8'")
   })
 
   await pool.query('SELECT NOW()')
