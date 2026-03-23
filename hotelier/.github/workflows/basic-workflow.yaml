@@ -3,7 +3,7 @@ name: Basic Workflow
 on:
   push:
     branches:
-      - feature/basic-workflow
+      - caracteristica/flujo-basico
 
 jobs:
   do-things:
