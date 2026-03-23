@@ -110,40 +110,48 @@ const showPassword = ref(false)
 const isLoading = ref(false)
 const error = ref(null)
 
-/* ------------------ COMPUTED ------------------ */
-const passwordFieldType = computed(() => (showPassword.value ? 'text' : 'password'))
 const togglePasswordVisibility = () => showPassword.value = !showPassword.value
+const passwordFieldType = computed(() => (showPassword.value ? 'text' : 'password'))
 
-const passwordError = computed(() => error.value?.toLowerCase().includes('contraseña'))
-const emailError = computed(() => {
-  if (!error.value) return false
-  const m = error.value.toLowerCase()
-  return m.includes('usuario') || m.includes('correo') || m.includes('email') || m.includes('credenciales')
-})
-const generalError = computed(() => error.value && !emailError.value && !passwordError.value)
+// Validaciones de error más robustas
+const errorMsg = computed(() => error.value?.toLowerCase() || '')
+const passwordError = computed(() => errorMsg.value.includes('contraseña') || errorMsg.value.includes('password'))
+const emailError = computed(() => 
+  errorMsg.value.includes('usuario') || 
+  errorMsg.value.includes('correo') || 
+  errorMsg.value.includes('email') || 
+  errorMsg.value.includes('credenciales')
+)
 
-/* ------------------ LOGIN MANUAL (CORREGIDO) ------------------ */
+/* ------------------ LÓGICA DE PERSISTENCIA CENTRALIZADA ------------------ */
+const finalizeLogin = (userData, token) => {
+  // Centralizamos todo en authService para evitar inconsistencias con el Header
+  authService.saveToken(token)
+  authService.setUserData(userData) 
+  
+  // Notificamos al Header (si usa el truco del storage event)
+  window.dispatchEvent(new Event('storage'))
+
+  if (userData.email === 'admin@gmail.com') {
+    router.push('/admin')
+  } else {
+    router.push('/home')
+  }
+}
+
+/* ------------------ LOGIN MANUAL ------------------ */
 const handleLogin = async () => {
   error.value = null
   isLoading.value = true
   try {
     const res = await authService.login(email.value, password.value)
-    
-    // El backend envía { token, user: { username, email } }
-    authService.saveToken(res.data.token)
-    
-    const userData = res.data.user // Accedemos al objeto user corregido
-    
-    authService.setUserData({
-      username: userData.username,
-      email: userData.email,
-      googleUser: false,
-      picture: null 
-    })
-    
-    router.push('/home')
+    if (res.data && res.data.user) {
+      finalizeLogin(res.data.user, res.data.token)
+    } else {
+      throw new Error('Respuesta del servidor incompleta')
+    }
   } catch (err) {
-    error.value = err.response?.data?.message || 'Error de conexión.'
+    error.value = err.response?.data?.message || 'Credenciales inválidas o error de red.'
   } finally {
     isLoading.value = false
   }
@@ -153,47 +161,35 @@ const handleLogin = async () => {
 const handleGoogleCredential = async (response) => {
   error.value = null
   isLoading.value = true
-  const idToken = response.credential
-  if (!idToken) {
-    error.value = 'No se obtuvo credencial de Google.'
-    isLoading.value = false
-    return
-  }
   try {
-    const res = await authService.googleLogin(idToken)
-    authService.saveToken(res.data.token)
-    authService.setUserData(res.data.user)
-    router.push('/home')
+    const res = await authService.googleLogin(response.credential)
+    finalizeLogin(res.data.user, res.data.token)
   } catch (err) {
-    error.value = err.response?.data?.message || 'Error autenticación Google.'
+    error.value = err.response?.data?.message || 'Fallo en la autenticación con Google.'
   } finally {
     isLoading.value = false
   }
 }
 
-/* ------------------ GOOGLE BUTTON ------------------ */
 onMounted(() => {
-  setTimeout(() => {
+  // Aseguramos que Google One Tap/Button cargue correctamente
+  const initGoogle = () => {
     if (window.google?.accounts?.id) {
       window.google.accounts.id.initialize({
         client_id: '128715608979-nffc56ns9uagf29p7j9em6vmm6mrkidv.apps.googleusercontent.com',
         callback: handleGoogleCredential,
-        ux_mode: 'popup'
       })
-      window.google.accounts.id.renderButton(
-        document.getElementById('google-button-target'),
-        {
-          theme: 'outline',
-          size: 'large',
-          width: 302,
-          text: 'signin_with',
-          shape: 'rectangular'
-        }
-      )
+      const target = document.getElementById('google-button-target')
+      if (target) {
+        window.google.accounts.id.renderButton(target, {
+          theme: 'outline', size: 'large', width: 302
+        })
+      }
     } else {
-      console.warn('Google SDK no cargado.')
+      setTimeout(initGoogle, 200) // Reintento si el script no ha cargado
     }
-  }, 300)
+  }
+  initGoogle()
 })
 </script>
 

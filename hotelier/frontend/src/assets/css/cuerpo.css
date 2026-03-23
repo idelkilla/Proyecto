@@ -852,3 +852,14 @@ html {
     cursor: pointer;
     background-color: #fff;
 }
+
+.img-sin-foto {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  background: #f0f0f0; color: #bbb; font-size: .85rem;
+}
+.estado-busqueda {
+  padding: 2rem;
+  text-align: center;
+  color: #666;
+}

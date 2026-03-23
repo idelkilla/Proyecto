@@ -7,12 +7,8 @@
     <div class="form-box">
       <!-- Opciones (Hospedaje, Vuelos, etc.) -->
       <div class="options">
-        <div
-          v-for="option in options"
-          :key="option.id"
-          :class="['item', { active: activeOption === option.id }]"
-          @click="selectOption(option.id)"
-        >
+        <div v-for="option in options" :key="option.id" :class="['item', { active: activeOption === option.id }]"
+          @click="selectOption(option.id)">
           <img :src="getIconPath(option.icon_img)" :alt="option.label" />
           <span>{{ option.label }}</span>
         </div>
@@ -27,14 +23,8 @@
             <label>¿A dónde quieres ir?</label>
             <div class="input-with-icon">
               <span class="material-symbols-outlined custom-icon">location_on</span>
-              <input
-                type="text"
-                v-model="busquedaDestino"
-                @focus="abrirMenu"
-                @input="fetchUbicaciones"
-                placeholder="Destino"
-                autocomplete="off"
-              />
+              <input type="text" v-model="busquedaDestino" @focus="abrirMenu" @input="fetchUbicaciones"
+                placeholder="Destino" autocomplete="off" />
             </div>
           </div>
 
@@ -45,12 +35,7 @@
             <div v-else-if="sugerencias.length === 0" class="location-item">
               <span class="loc-details">No se encontraron ubicaciones</span>
             </div>
-            <div
-              v-for="loc in sugerencias"
-              :key="loc.id"
-              class="location-item"
-              @mousedown="seleccionarUbicacion(loc)"
-            >
+            <div v-for="loc in sugerencias" :key="loc.id" class="location-item" @mousedown="seleccionarUbicacion(loc)">
               <span class="material-symbols-outlined icon-gray">
                 {{ loc.id_tipo === 1 ? 'apartment' : 'location_on' }}
               </span>
@@ -63,56 +48,32 @@
         </div>
 
         <!-- Fechas — el calendario sale aquí abajo -->
-        <div
-          class="dynamic-field-wrapper date-field"
-          style="position: relative; flex: 2"
-        >
+        <div class="dynamic-field-wrapper date-field" style="position: relative; flex: 2">
           <div class="field-group border-style" @click="toggleCalendar">
             <label>Entrada — Salida</label>
             <div class="input-with-icon">
               <span class="material-symbols-outlined custom-icon">calendar_month</span>
-              <input
-                type="text"
-                readonly
-                :value="resumenFechas"
-                placeholder="Seleccionar fechas"
-                class="readonly-input"
-              />
+              <input type="text" readonly :value="resumenFechas" placeholder="Seleccionar fechas"
+                class="readonly-input" />
             </div>
           </div>
 
           <!-- ✅ CalendarSelector va DENTRO del wrapper con position:relative -->
-          <CalendarSelector
-            v-if="mostrarCalendario"
-            @update:dates="onDatesSelected"
-            @close="mostrarCalendario = false"
-          />
+          <CalendarSelector v-if="mostrarCalendario" @update:dates="onDatesSelected"
+            @close="mostrarCalendario = false" />
         </div>
 
         <!-- Huéspedes -->
-        <div
-          class="dynamic-field-wrapper"
-          id="guest-wrapper"
-          style="position: relative; flex: 2"
-        >
+        <div class="dynamic-field-wrapper" id="guest-wrapper" style="position: relative; flex: 2">
           <div class="field-group border-style" @click="toggleHuespedes">
             <label>Huéspedes</label>
             <div class="input-with-icon">
               <span class="material-symbols-outlined custom-icon">person</span>
-              <input
-                type="text"
-                readonly
-                :value="resumenHuespedes"
-                class="readonly-input"
-              />
+              <input type="text" readonly :value="resumenHuespedes" class="readonly-input" />
             </div>
           </div>
 
-          <GuestSelector
-            v-if="mostrarHuespedes"
-            v-model="habitaciones"
-            @close="mostrarHuespedes = false"
-          />
+          <GuestSelector v-if="mostrarHuespedes" v-model="habitaciones" @close="mostrarHuespedes = false" />
         </div>
 
         <!-- Buscar -->
@@ -142,12 +103,7 @@
             <label>Origen</label>
             <div class="input-with-icon">
               <span class="material-symbols-outlined custom-icon">location_on</span>
-              <input
-                type="text"
-                v-model="origenVuelo"
-                placeholder="¿Desde dónde viajas?"
-                autocomplete="off"
-              />
+              <input type="text" v-model="origenVuelo" placeholder="¿Desde dónde viajas?" autocomplete="off" />
             </div>
           </div>
         </div>
@@ -159,15 +115,18 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-import BuscarButton    from './ButtonSearch.vue'
-import GuestSelector   from './GuestSelector.vue'
+import { useRouter } from 'vue-router'
+import BuscarButton from './ButtonSearch.vue'
+import GuestSelector from './GuestSelector.vue'
 import CalendarSelector from './CalendarSelector.vue'
 
 const API_URL = 'http://localhost:3000'
+const router  = useRouter()
 
-// ── Estado general ─────────────────────────────────────────
+// ── Estado general ────────────────────────────────────────────────────────────
 const activeOption      = ref('hospedaje')
 const busquedaDestino   = ref('')
+const selectedUbicacion = ref(null)       // objeto completo del dropdown
 const sugerencias       = ref([])
 const mostrarDropdown   = ref(false)
 const mostrarHuespedes  = ref(false)
@@ -177,36 +136,31 @@ const agregarVuelo      = ref(true)
 const agregarAuto       = ref(true)
 const origenVuelo       = ref('')
 
-// ── Fechas ─────────────────────────────────────────────────
+// ── Fechas ────────────────────────────────────────────────────────────────────
 const fechaInicio = ref('')
 const fechaFin    = ref('')
 
-// Recibe { start: 'YYYY-MM-DD', end: 'YYYY-MM-DD' } del CalendarSelector
 function onDatesSelected(dates) {
   fechaInicio.value = dates.start
   fechaFin.value    = dates.end
-  // NO cerramos el calendario — el usuario lo cierra haciendo clic fuera
 }
 
-// Formatea "YYYY-MM-DD" → "mié 18 de mar"
 function fmtFecha(str) {
   if (!str) return ''
   const [y, m, d] = str.split('-').map(Number)
   return new Date(y, m - 1, d).toLocaleDateString('es-ES', {
-    weekday: 'short',
-    day:     'numeric',
-    month:   'short',
+    weekday: 'short', day: 'numeric', month: 'short',
   })
 }
 
 const resumenFechas = computed(() => {
   if (!fechaInicio.value) return ''
   const ini = fmtFecha(fechaInicio.value)
-  const fin = fechaFin.value ? fmtFecha(fechaFin.value) : '...'
+  const fin  = fechaFin.value ? fmtFecha(fechaFin.value) : '...'
   return `${ini} — ${fin}`
 })
 
-// ── Huéspedes ──────────────────────────────────────────────
+// ── Huéspedes ─────────────────────────────────────────────────────────────────
 const habitaciones = ref([{ adultos: 2, ninos: 0, edadesNinos: [] }])
 
 const resumenHuespedes = computed(() => {
@@ -216,17 +170,17 @@ const resumenHuespedes = computed(() => {
   return `${totalPersonas} personas, ${habitaciones.value.length} habitación`
 })
 
-// ── Opciones ───────────────────────────────────────────────
+// ── Opciones ──────────────────────────────────────────────────────────────────
 const options = ref([
-  { id: 'hospedaje',   label: 'Hospedaje',   icon_img: 'bed'      },
-  { id: 'vuelos',      label: 'Vuelos',       icon_img: 'flight'   },
-  { id: 'autos',       label: 'Autos',        icon_img: 'car'      },
-  { id: 'paquetes',    label: 'Paquetes',     icon_img: 'package'  },
-  { id: 'actividades', label: 'Actividades',  icon_img: 'ticket'   },
-  { id: 'cruceros',    label: 'Cruceros',     icon_img: 'cruise'   },
+  { id: 'hospedaje',   label: 'Hospedaje',   icon_img: 'bed'     },
+  { id: 'vuelos',      label: 'Vuelos',       icon_img: 'flight'  },
+  { id: 'autos',       label: 'Autos',        icon_img: 'car'     },
+  { id: 'paquetes',    label: 'Paquetes',     icon_img: 'package' },
+  { id: 'actividades', label: 'Actividades',  icon_img: 'ticket'  },
+  { id: 'cruceros',    label: 'Cruceros',     icon_img: 'cruise'  },
 ])
 
-// ── Toggles ────────────────────────────────────────────────
+// ── Toggles ───────────────────────────────────────────────────────────────────
 const toggleCalendar = () => {
   mostrarCalendario.value = !mostrarCalendario.value
   mostrarHuespedes.value  = false
@@ -239,14 +193,20 @@ const toggleHuespedes = () => {
   mostrarDropdown.value   = false
 }
 
-// ── Ubicaciones ────────────────────────────────────────────
+// ── Ubicaciones ───────────────────────────────────────────────────────────────
 async function fetchUbicaciones() {
-  mostrarDropdown.value   = true
-  mostrarHuespedes.value  = false
-  mostrarCalendario.value = false
+  mostrarDropdown.value    = true
+  mostrarHuespedes.value   = false
+  mostrarCalendario.value  = false
   loadingUbicaciones.value = true
+
+  // Si el usuario edita manualmente el texto, resetear la ubicación seleccionada
+  selectedUbicacion.value = null
+
   try {
-    const res = await fetch(`${API_URL}/api/search/ubicaciones?q=${busquedaDestino.value}`)
+    const res = await fetch(
+      `${API_URL}/api/search/ubicaciones?q=${busquedaDestino.value}`
+    )
     sugerencias.value = await res.json()
   } catch {
     sugerencias.value = []
@@ -258,11 +218,12 @@ async function fetchUbicaciones() {
 const abrirMenu = fetchUbicaciones
 
 function seleccionarUbicacion(loc) {
-  busquedaDestino.value = `${loc.ubicacion}, ${loc.ciudad}, ${loc.pais}`
-  mostrarDropdown.value = false
+  selectedUbicacion.value = loc
+  busquedaDestino.value   = `${loc.ubicacion}, ${loc.ciudad}, ${loc.pais}`
+  mostrarDropdown.value   = false
 }
 
-// ── Helpers ────────────────────────────────────────────────
+// ── Helpers ───────────────────────────────────────────────────────────────────
 function selectOption(id) { activeOption.value = id }
 
 function getIconPath(name) {
@@ -275,19 +236,26 @@ function cerrarTodos() {
   mostrarCalendario.value = false
 }
 
-// ── Búsqueda ───────────────────────────────────────────────
+// ── Búsqueda ──────────────────────────────────────────────────────────────────
 async function handleSearch() {
-  const payload = {
-    categoria:    activeOption.value,
-    destino:      busquedaDestino.value,
-    entrada:      fechaInicio.value,
-    salida:       fechaFin.value,
-    habitaciones: habitaciones.value,
+  if (!busquedaDestino.value || !fechaInicio.value || !fechaFin.value) {
+    alert('Por favor completa destino y fechas')
+    return
   }
-  console.log('Buscando...', payload)
+
+  router.push({
+    path: '/head',
+    query: {
+      destino:      busquedaDestino.value,          // texto legible: "Sosúa, Puerto Plata, RD"
+      id_ubicacion: selectedUbicacion.value?.id ?? '', // ID numérico para el backend
+      entrada:      fechaInicio.value,
+      salida:       fechaFin.value,
+      huespedes:    JSON.stringify(habitaciones.value),
+    }
+  })
 }
 
-// ── Clic fuera — cierra todos los dropdowns ────────────────
+// ── Clic fuera — cierra todos los dropdowns ───────────────────────────────────
 const handleOutsideClick = (e) => {
   if (
     !e.target.closest('#destination-wrapper') &&

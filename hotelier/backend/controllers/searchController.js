@@ -1,98 +1,206 @@
-import { getPool } from '../db.js';
+import { getPool } from '../db.js'
 
+// GET /api/search/ubicaciones?q=texto
 export const getUbicaciones = async (req, res) => {
-    const { q } = req.query;
+    const { q } = req.query
     try {
-        const pool = getPool();
-        const query = `
-            SELECT u."ID_UBICACION" AS id, u."NOMBRE" AS ubicacion, u."ID_TIPO" AS id_tipo, 
-                   c."NOMBRE" AS ciudad, p."NOMBRE" AS pais
+        const pool = getPool()
+        const { rows } = await pool.query(`
+            SELECT
+                u."ID_UBICACION" AS id,
+                u."NOMBRE"       AS ubicacion,
+                u."ID_TIPO"      AS id_tipo,
+                c."NOMBRE"       AS ciudad,
+                p."NOMBRE"       AS pais
             FROM "UBICACION" u
             JOIN "CIUDAD" c ON u."ID_CIUDAD" = c."ID_CIUDAD"
-            JOIN "PAIS" p ON c."ID_PAIS" = p."ID_PAIS"
+            JOIN "PAIS"   p ON c."ID_PAIS"   = p."ID_PAIS"
             WHERE ($1 = '' OR u."NOMBRE" ILIKE $1 OR c."NOMBRE" ILIKE $1 OR p."NOMBRE" ILIKE $1)
-            ORDER BY u."NOMBRE" LIMIT 5`;
-
-        const result = await pool.query(query, [q ? `%${q}%` : '']);
-        res.json(result.rows);
-    } catch (error) {
-        console.error("Error en getUbicaciones:", error);
-        res.status(500).json([]);
+            ORDER BY u."NOMBRE" LIMIT 5
+        `, [q ? `%${q}%` : ''])
+        res.json(rows)
+    } catch (err) {
+        console.error('getUbicaciones:', err.message)
+        res.status(500).json([])
     }
-};
+}
 
 export const postBuscarHospedaje = async (req, res) => {
-    const { destino, habitaciones, fecha_inicio, fecha_fin } = req.body;
+    const { destino, habitaciones, fecha_inicio, fecha_fin } = req.body
 
     try {
-        const pool = getPool();
+        const pool = getPool()
 
-        // 1. VALIDACIÓN DE ENTRADA
-        if (!fecha_inicio || !fecha_fin || !habitaciones || !Array.isArray(habitaciones)) {
-            return res.status(400).json({ error: "Datos de búsqueda incompletos o malformados" });
+        if (!habitaciones || !Array.isArray(habitaciones)) {
+            return res.status(400).json({ error: 'Parámetro habitaciones requerido' })
         }
 
-        // 2. CÁLCULO SEGURO DE NOCHES (Evita el error NaN)
-        const dateInicio = new Date(fecha_inicio);
-        const dateFin = new Date(fecha_fin);
-        
-        // Calculamos la diferencia en milisegundos y convertimos a días
-        const diffInMs = dateFin.getTime() - dateInicio.getTime();
-        const totalNoches = Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
+        const maxAdultos = Math.max(...habitaciones.map(h => parseInt(h.adultos) || 0))
+        const maxNinos   = Math.max(...habitaciones.map(h => parseInt(h.ninos)   || 0))
 
-        // Verificación de seguridad antes de ejecutar SQL
-        if (isNaN(totalNoches) || totalNoches <= 0) {
-            console.error(`Cálculo fallido: Inicio(${fecha_inicio}), Fin(${fecha_fin}), Noches(${totalNoches})`);
-            return res.status(400).json({ error: "El rango de fechas no es válido" });
+        // Tomar solo la primera parte antes de la coma
+        const textoBusqueda = destino
+            ? `%${destino.split(',')[0].trim()}%`
+            : '%'
+
+        console.log('=== BÚSQUEDA ===')
+        console.log('destino recibido:', destino)
+        console.log('textoBusqueda:', textoBusqueda)
+        console.log('maxAdultos:', maxAdultos, '| maxNinos:', maxNinos)
+
+        // ── 1. Query principal ──────────────────────────────────────────────
+        const { rows } = await pool.query(`
+            SELECT
+                s."ID_SERVICIO"                          AS id_servicio,
+                s."NOMBRE"                               AS hotel,
+                u."NOMBRE"                               AS ubicacion_nombre,
+                c."NOMBRE"                               AS ciudad,
+                p."NOMBRE"                               AS pais,
+                th."NOMBRE_TIPO"                         AS tipo_hospedaje,
+                MIN(hab."PRECIO_NOCHE")                  AS precio_min,
+                ROUND(AVG(r."CALIFICACION")::NUMERIC, 1) AS calificacion_promedio,
+                COUNT(DISTINCT r."ID_RESENA")            AS total_resenas,
+                COUNT(DISTINCT hab."ID_HABITACION")      AS habitaciones_disponibles
+            FROM      "SERVICIO"       s
+            JOIN      "HOSPEDAJE"      hos ON hos."ID_HOSPEDAJE" = s."ID_SERVICIO"
+            JOIN      "TIPO_HOSPEDAJE" th  ON th."ID_TIPO"       = hos."ID_TIPO"
+            JOIN      "UBICACION"      u   ON u."ID_UBICACION"   = hos."ID_UBICACION"
+            JOIN      "CIUDAD"         c   ON c."ID_CIUDAD"      = u."ID_CIUDAD"
+            JOIN      "PAIS"           p   ON p."ID_PAIS"        = c."ID_PAIS"
+            JOIN      "HABITACION"     hab ON hab."ID_HOSPEDAJE" = hos."ID_HOSPEDAJE"
+            LEFT JOIN "RESENA"         r   ON r."ID_SERVICIO"    = s."ID_SERVICIO"
+            WHERE
+                (
+                    $1 = '%'
+                    OR c."NOMBRE"  ILIKE $1
+                    OR u."NOMBRE"  ILIKE $1
+                    OR p."NOMBRE"  ILIKE $1
+                )
+                AND hab."CAPACIDAD_ADULTO" >= $2
+                AND hab."CAPACIDAD_NINOS"  >= $3
+            GROUP BY
+                s."ID_SERVICIO", s."NOMBRE",
+                u."NOMBRE", c."NOMBRE", p."NOMBRE",
+                th."NOMBRE_TIPO"
+            ORDER BY precio_min ASC
+        `, [textoBusqueda, maxAdultos, maxNinos])
+
+        console.log('Hospedajes encontrados:', rows.length)
+        if (rows.length === 0) {
+            console.log('⚠️ Sin resultados — verificar datos en BD')
+            return res.json([])
         }
 
-        // 3. REQUERIMIENTOS DE CAPACIDAD Y CANTIDAD
-        const numHabitacionesSolicitadas = habitaciones.length;
-        const maxAdultos = Math.max(...habitaciones.map(h => parseInt(h.adultos) || 0));
-        const maxNinos = Math.max(...habitaciones.map(h => parseInt(h.ninos) || 0));
+        const ids = rows.map(r => r.id_servicio)
+        console.log('IDs encontrados:', ids)
 
-        // 4. QUERY CON PARÁMETROS LIMPIOS
-        const query = `
-            SELECT 
-                s."ID_SERVICIO", 
-                s."NOMBRE" AS hotel, 
-                u."NOMBRE" AS ubicacion, 
-                MIN(COALESCE(disp."PRECIO_AJUSTADO", hab."PRECIO_NOCHE")) AS precio_min
-            FROM "SERVICIO" s
-            JOIN "HOSPEDAJE" hos ON s."ID_SERVICIO" = hos."ID_SERVICIO"
-            JOIN "UBICACION" u ON hos."ID_UBICACION" = u."ID_UBICACION"
-            JOIN "HABITACION" hab ON hos."ID_SERVICIO" = hab."ID_SERVICIO"
-            LEFT JOIN "DISPONIBILIDAD" disp ON hab."ID_HABITACION" = disp."ID_HABITACION"
-            WHERE (u."NOMBRE" ILIKE $1 OR $1 = '') 
-              AND hab."CAPACIDAD_ADULTO" >= $2 
-              AND hab."CAPACIDAD_NINOS" >= $3
-              AND hab."ID_HABITACION" IN (
-                  SELECT d."ID_HABITACION"
-                  FROM "DISPONIBILIDAD" d
-                  WHERE d."FECHA" >= $4 AND d."FECHA" < $5
-                    AND d."CANTIDAD_DISPONIBLE" >= $7
-                    AND d."ESTADO" = '1'
-                  GROUP BY d."ID_HABITACION"
-                  HAVING COUNT(DISTINCT d."FECHA") = $6
-              )
-            GROUP BY s."ID_SERVICIO", s."NOMBRE", u."NOMBRE"
-            ORDER BY precio_min ASC`;
+        // ── 2. Amenidades (tabla HOSPEDAJE_SERVICIO) ────────────────────────
+        let amenidadesMap = {}
+        try {
+            const { rows: srvRows } = await pool.query(`
+                SELECT hs."ID_HOSPEDAJE" AS id_hospedaje, si."NOMBRE" AS nombre
+                FROM "HOSPEDAJE_SERVICIO" hs
+                JOIN "SERVICIO_INCLUIDO"  si ON si."ID_SERVICIO_INCLUIDO" = hs."ID_SERVICIO_INCLUIDO"
+                WHERE hs."ID_HOSPEDAJE" = ANY($1)
+            `, [ids])
+            srvRows.forEach(({ id_hospedaje, nombre }) => {
+                if (!amenidadesMap[id_hospedaje]) amenidadesMap[id_hospedaje] = []
+                amenidadesMap[id_hospedaje].push(nombre)
+            })
+            console.log('Amenidades OK:', srvRows.length, 'registros')
+        } catch (e) {
+            console.error('⚠️ Error en amenidades (no crítico):', e.message)
+        }
 
-        const params = [
-            destino ? `%${destino}%` : '', // $1
-            maxAdultos,                    // $2
-            maxNinos,                      // $3
-            fecha_inicio,                  // $4
-            fecha_fin,                     // $5
-            totalNoches,                   // $6 (Ahora garantizado como número)
-            numHabitacionesSolicitadas     // $7
-        ];
+        // ── 3. Imágenes (tabla IMAGEN_HOSPEDAJE — puede no existir aún) ─────
+        let imagenesMap = {}
+        try {
+            const { rows: imgRows } = await pool.query(`
+                SELECT "ID_HOSPEDAJE" AS id_hospedaje, "URL" AS url
+                FROM "IMAGEN_HOSPEDAJE"
+                WHERE "ID_HOSPEDAJE" = ANY($1)
+                ORDER BY "ID_HOSPEDAJE", "ORDEN" ASC
+            `, [ids])
+            imgRows.forEach(({ id_hospedaje, url }) => {
+                if (!imagenesMap[id_hospedaje]) imagenesMap[id_hospedaje] = []
+                imagenesMap[id_hospedaje].push(url)
+            })
+            console.log('Imágenes OK:', imgRows.length, 'registros')
+        } catch (e) {
+            console.error('⚠️ Error en imágenes (tabla puede no existir):', e.message)
+            // No es crítico — los hoteles se muestran sin foto
+        }
 
-        const result = await pool.query(query, params);
-        res.json(result.rows);
+        // ── 4. Respuesta ────────────────────────────────────────────────────
+        const resultado = rows.map(r => ({
+            id_servicio:              r.id_servicio,
+            hotel:                    r.hotel,
+            ubicacion:                `${r.ubicacion_nombre}, ${r.ciudad}, ${r.pais}`,
+            tipo_hospedaje:           r.tipo_hospedaje,
+            precio_min:               parseFloat(r.precio_min) || 0,
+            calificacion_promedio:    r.calificacion_promedio
+                                        ? parseFloat(r.calificacion_promedio)
+                                        : null,
+            total_resenas:            parseInt(r.total_resenas) || 0,
+            habitaciones_disponibles: parseInt(r.habitaciones_disponibles) || 0,
+            amenidades:               amenidadesMap[r.id_servicio] || [],
+            imagenes:                 imagenesMap[r.id_servicio]   || [],
+        }))
 
-    } catch (error) {
-        console.error("SEARCH_ERROR:", error.message);
-        res.status(500).json({ error: "Error interno en el motor de búsqueda" });
+        console.log('Enviando', resultado.length, 'hospedajes al frontend')
+        res.json(resultado)
+
+    } catch (err) {
+        console.error('SEARCH_ERROR CRÍTICO:', err.message)
+        console.error(err.stack)
+        res.status(500).json({ error: err.message })
     }
-};
+}
+
+// GET /api/search/hospedaje/:id
+export const getDetalleHospedaje = async (req, res) => {
+    const { id } = req.params
+    try {
+        const pool = getPool()
+
+        const { rows } = await pool.query(`
+            SELECT
+                s."ID_SERVICIO"   AS id_servicio,
+                s."NOMBRE"        AS hotel,
+                c."NOMBRE"        AS ciudad,
+                p."NOMBRE"        AS pais,
+                u."NOMBRE"        AS ubicacion_nombre,
+                th."NOMBRE_TIPO"  AS tipo_hospedaje,
+                pr."NOMBRE_LEGAL" AS proveedor
+            FROM "SERVICIO"       s
+            JOIN "HOSPEDAJE"      hos ON hos."ID_HOSPEDAJE"  = s."ID_SERVICIO"
+            JOIN "TIPO_HOSPEDAJE" th  ON th."ID_TIPO"        = hos."ID_TIPO"
+            JOIN "UBICACION"      u   ON u."ID_UBICACION"    = hos."ID_UBICACION"
+            JOIN "CIUDAD"         c   ON c."ID_CIUDAD"       = u."ID_CIUDAD"
+            JOIN "PAIS"           p   ON p."ID_PAIS"         = c."ID_PAIS"
+            JOIN "PROVEEDOR"      pr  ON pr."ID_PROVEEDOR"   = s."ID_PROVEEDOR"
+            WHERE s."ID_SERVICIO" = $1
+        `, [id])
+
+        if (!rows.length) return res.status(404).json({ error: 'No encontrado' })
+
+        const { rows: habitaciones } = await pool.query(`
+            SELECT
+                hab."ID_HABITACION"    AS id_habitacion,
+                tph."NOMBRE"           AS tipo,
+                hab."CAPACIDAD_ADULTO" AS capacidad_adulto,
+                hab."CAPACIDAD_NINOS"  AS capacidad_ninos,
+                hab."PRECIO_NOCHE"     AS precio_noche
+            FROM "HABITACION"      hab
+            JOIN "TIPO_HABITACION" tph ON tph."ID_TIPO_HABITACION" = hab."ID_TIPO_HABITACION"
+            WHERE hab."ID_HOSPEDAJE" = $1
+            ORDER BY hab."PRECIO_NOCHE" ASC
+        `, [id])
+
+        res.json({ ...rows[0], habitaciones })
+
+    } catch (err) {
+        console.error('getDetalleHospedaje:', err.message)
+        res.status(500).json({ error: err.message })
+    }
+}
